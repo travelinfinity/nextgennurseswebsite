@@ -57,6 +57,8 @@ img{max-width:100%;display:block}
 .btn-coral{background:var(--coral);color:#2A0C04}
 .btn-coral:hover{filter:brightness(1.05)}
 .btn-line{border-color:var(--line);color:var(--fg);background:transparent}
+.btn-wa{background:#1F8A4C;color:#fff}
+.btn-wa:hover{filter:brightness(1.08)}
 .btn-line:hover{border-color:var(--teal);color:var(--teal)}
 .btn-ghost-ink{border-color:rgba(234,244,244,.3);color:var(--on-ink);background:transparent}
 .btn-ghost-ink:hover{border-color:var(--mint);color:var(--mint)}
@@ -171,10 +173,22 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .mk-cue{border:1.5px dashed #D9412F;color:#B3261E;border-radius:8px;padding:7px 9px;font-size:10px;font-weight:700;background:#FCE7E3}
 
 /* NCLEX mock UI */
-.nk{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;background:#FBF7F4;color:#2A1A14;font-family:var(--f-body)}
+.nk{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;background:#FFFFFF;color:#1A2230;font-family:var(--f-body)}
 .nk-top{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:#2A1A24;color:#FBEDE7}
 .nk-top b{font:800 12.5px var(--f-display)}
-.nk-top span{font:700 11px/1 var(--f-mono);color:#FFB49F}
+.nk-tabs{display:flex;gap:4px}
+.nk-tabs button{border:0;border-radius:6px;padding:5px 9px;font:700 10.5px/1 var(--f-mono);background:#3D2A36;color:#FBEDE7;cursor:pointer}
+.nk-tabs button[aria-pressed="true"]{background:var(--coral);color:#2A0C04}
+.nk-cat{font:700 10px/1 var(--f-mono);color:#B4462C;letter-spacing:.06em;text-transform:uppercase}
+.nk-body{min-height:0;overflow:hidden}
+.nk-body[hidden]{display:none!important}
+@media (max-width:560px){.viewport{aspect-ratio:4/5}.bt{grid-template-columns:1fr 1fr!important}.bt-col.mid{grid-column:1/-1;order:-1}.bt-mid{width:100%!important}}
+.bt{display:grid;grid-template-columns:1fr auto 1fr;gap:6px 10px;align-items:center}
+.bt-col{display:grid;gap:6px}
+.bt-h{font:700 9px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:#5A6575;text-align:center}
+.bt-box{border:1.5px solid #1D8350;background:#E6F5EC;border-radius:8px;padding:6px 8px;font-size:10.5px;line-height:1.25;text-align:center}
+.bt-mid{border:2px solid #1A2230;background:#FFF;border-radius:10px;padding:10px 8px;font:800 11px/1.25 var(--f-body);text-align:center;width:118px}
+.bt-link{width:16px;height:2px;background:#9AA6B5}
 .nk-body{padding:14px 16px;display:grid;align-content:start;gap:9px}
 .nk-prog{height:6px;border-radius:9px;background:#EBDDD5;overflow:hidden}
 .nk-prog i{display:block;height:100%;width:42%;background:var(--coral)}
@@ -414,7 +428,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Study on your phone between shifts</span></li>
       </ul>
       <div class="price-row">
-        <div class="price"><b>2 plans</b><span>choose the one that fits your exam date</span></div>
+        <div class="price"><b>From $16.66<small style="font-size:18px">/mo</small></b><span>pay monthly or every 3 months · cancel anytime</span></div>
         <div class="ctas"><a class="btn btn-coral" href="#pricing">See plans</a><a class="btn btn-line" data-href="NCLEX_URL" href="#" target="_blank" rel="noopener">Sign in</a></div>
       </div>
     </div>
@@ -422,19 +436,29 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <div class="screen"><div class="screen-bar"><i></i><i></i><i></i><span data-cfg-host="NCLEX_URL">NCLEX Hero</span></div>
         <div class="viewport" id="vpNclex">
           <div class="nk" aria-label="Preview of the NCLEX Hero app">
-            <div class="nk-top"><b>NCLEX Hero</b><span>Question 21 · Safety & infection control</span></div>
-            <div class="nk-body">
-              <div class="nk-prog"><i></i></div>
+            <div class="nk-top"><b>NCLEX Hero</b><span class="nk-tabs"><button type="button" data-nk="mcq" aria-pressed="true">Multiple choice</button><button type="button" data-nk="bow" aria-pressed="false">Bow-tie</button></span></div>
+            <div class="nk-body" id="nkMcq">
+              <span class="nk-cat">Safety & infection control</span>
               <p class="nk-q">A client is receiving a blood transfusion and develops chills and low back pain 10 minutes after it starts. What should the nurse do first?</p>
               <div class="nk-opt"><b>A</b>Slow the transfusion rate</div>
               <div class="nk-opt sel"><b>B</b>Stop the transfusion</div>
               <div class="nk-opt"><b>C</b>Notify the provider</div>
               <div class="nk-rat"><b>Rationale:</b> stop first to limit exposure, keep the IV line open with 0.9% saline, then assess and notify.</div>
             </div>
+            <div class="nk-body" id="nkBow" hidden>
+              <span class="nk-cat">Bow-tie · Clinical judgement</span>
+              <p class="nk-q" style="font-size:11.5px">15 minutes into a red cell transfusion: temp 38.7 °C, HR 120, BP 98/58, chills and low back pain. Complete the diagram.</p>
+              <div class="bt">
+                <div class="bt-col"><span class="bt-h">Actions to take</span><div class="bt-box">Stop the transfusion</div><div class="bt-box">Keep IV open with 0.9% saline</div></div>
+                <div class="bt-col mid" style="justify-items:center"><span class="bt-h">Condition</span><div class="bt-mid">Acute haemolytic transfusion reaction</div></div>
+                <div class="bt-col"><span class="bt-h">Monitor</span><div class="bt-box">Blood pressure</div><div class="bt-box">Urine output & colour</div></div>
+              </div>
+            </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="try"><span>Sample question for illustration</span><button type="button" data-live="nclex">Try it live here</button></div>
+      <div class="try"><span>Sample questions for illustration</span><button type="button" data-live="nclex">Try it live here</button></div>
     </div>
   </article>
 </div></section>
@@ -458,7 +482,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <!-- ============ PRICING ============ -->
 <section class="section" id="pricing" style="padding-top:0"><div class="wrap">
-  <div class="head"><div class="eyebrow">Pricing</div><h2>Pay once for the exam you're sitting</h2><p>No subscriptions to cancel later.</p></div>
+  <div class="head"><div class="eyebrow">Pricing</div><h2>Simple pricing for the exam you're sitting</h2><p>OSCE Prep is a single payment with lifetime access. NCLEX Hero is a flexible subscription you can cancel at any time.</p></div>
   <div class="prices">
     <div class="pc osce">
       <span class="tag">Australia · Ahpra RN OSCE</span>
@@ -472,8 +496,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <h3>NCLEX Hero</h3>
       <ul><li>NCLEX-style practice questions</li><li>Rationales for every answer</li><li>Progress tracking</li><li>Phone, tablet and laptop</li></ul>
       <div class="plans">
-        <div class="plan"><div><b data-cfg="NCLEX_PLAN1_NAME">Plan 1</b><span data-cfg="NCLEX_PLAN1_PRICE"></span></div><a class="btn btn-coral" data-pay="NCLEX_PLAN1_URL" href="#" target="_blank" rel="noopener">Buy</a></div>
-        <div class="plan"><div><b data-cfg="NCLEX_PLAN2_NAME">Plan 2</b><span data-cfg="NCLEX_PLAN2_PRICE"></span></div><a class="btn btn-coral" data-pay="NCLEX_PLAN2_URL" href="#" target="_blank" rel="noopener">Buy</a></div>
+        <div class="plan"><div><b data-cfg="NCLEX_PLAN1_NAME">Monthly payment</b><span data-cfg="NCLEX_PLAN1_PRICE">$24.99 billed every month</span></div><a class="btn btn-coral" data-pay="NCLEX_PLAN1_URL" href="#" target="_blank" rel="noopener">Buy</a></div>
+        <div class="plan"><div><b data-cfg="NCLEX_PLAN2_NAME">Every 3 months · best value</b><span data-cfg="NCLEX_PLAN2_PRICE">$49.99 billed every 3 months (about $16.66/mo)</span></div><a class="btn btn-coral" data-pay="NCLEX_PLAN2_URL" href="#" target="_blank" rel="noopener">Buy</a></div>
       </div>
     </div>
   </div>
@@ -482,10 +506,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <!-- ============ COMMUNITY ============ -->
 <section class="section" style="padding-top:0"><div class="wrap">
   <div class="comm">
-    <div><div class="eyebrow">Join the community</div><h2>Daily OSCE and NCLEX tips on TikTok</h2><p>Short videos on stations, charting and the mistakes that cost marks. Questions about access? Message us on Telegram.</p></div>
+    <div><div class="eyebrow">Join the community</div><h2>Daily OSCE and NCLEX tips on TikTok</h2><p>Short videos on stations, charting and the mistakes that cost marks. Need help with access or payment? Message our support team on WhatsApp, or join the Telegram group.</p></div>
     <div style="display:grid;gap:14px">
       <span class="handle">@nexgennurses_</span>
-      <div class="ctas"><a class="btn btn-line" data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">Follow on TikTok</a><a class="btn btn-line" data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Message on Telegram</a></div>
+      <div class="ctas"><a class="btn btn-line" data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">Follow on TikTok</a><a class="btn btn-line" data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Join on Telegram</a><a class="btn btn-wa" data-href="WHATSAPP_URL" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>WhatsApp support</a></div>
     </div>
   </div>
 </div></section>
@@ -497,6 +521,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <details><summary>Is this affiliated with Ahpra, the NMBA or NCSBN?</summary><p>No. NextGen Nurses is an independent study resource. The practice stations and questions are original teaching material, not real exam items. Always follow the current official candidate handbook for your exam.</p></details>
     <details><summary>How do I get access after I pay?</summary><p>Checkout is handled securely by Stripe. Create an account in the app with the same email you used at checkout. Access is unlocked on that account once your purchase is confirmed, and you'll see the full course the next time you sign in.</p></details>
     <details><summary>Is OSCE Prep really a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
+    <details><summary>How does NCLEX Hero billing work?</summary><p>Choose a monthly payment ($24.99 each month) or pay every 3 months ($49.99, about $16.66 a month). Your plan renews automatically until you cancel, and you can cancel at any time.</p></details>
+    <details><summary>How do I contact support?</summary><p>Message our support team on WhatsApp using the link at the bottom of this page. We can help with payments, account access and unlocking your course.</p></details>
     <details><summary>Can I use it on my phone?</summary><p>Yes. Both apps work in your phone's browser, and the videos are filmed in portrait for phones.</p></details>
     <details><summary>I'm preparing for both exams. Do I need two accounts?</summary><p>Each app has its own sign-in. You can use the same email for both.</p></details>
   </div>
@@ -512,7 +538,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <footer class="foot"><div class="wrap">
   <a class="brand" href="#top"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#062A2A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-5 4 10 2-5h8"/></svg></span>NextGen Nurses</a>
   <p>Independent exam preparation for internationally qualified nurses. Not affiliated with or endorsed by Ahpra, the Nursing and Midwifery Board of Australia or the National Council of State Boards of Nursing. NCLEX® and NCLEX-RN® are registered trademarks of the National Council of State Boards of Nursing, Inc.</p>
-  <p>© <span id="yr">2026</span> NextGen Nurses · TikTok <a data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">@nexgennurses_</a></p>
+  <p>© <span id="yr">2026</span> NextGen Nurses · TikTok <a data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">@nexgennurses_</a> · <a data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Telegram</a> · <a data-href="WHATSAPP_URL" href="#" target="_blank" rel="noopener">WhatsApp support</a></p>
 </div></footer>
 
 <script>
@@ -524,13 +550,14 @@ const SITE={
   NCLEX_URL:"",                       // e.g. "https://your-nclex-app.vercel.app"
   OSCE_PRICE:"A$149",
   OSCE_PAY_URL:"https://buy.stripe.com/5kQ14g8CebBRedfcQs00004",
-  NCLEX_PLAN1_NAME:"Plan 1",          // e.g. "1 month access"
-  NCLEX_PLAN1_PRICE:"",               // e.g. "A$49"
+  NCLEX_PLAN1_NAME:"Monthly payment",
+  NCLEX_PLAN1_PRICE:"$24.99 billed every month",
   NCLEX_PLAN1_URL:"https://buy.stripe.com/14AdR2bOq35lc57bMo00001",
-  NCLEX_PLAN2_NAME:"Plan 2",          // e.g. "3 months access"
-  NCLEX_PLAN2_PRICE:"",               // e.g. "A$99"
+  NCLEX_PLAN2_NAME:"Every 3 months · best value",
+  NCLEX_PLAN2_PRICE:"$49.99 billed every 3 months (about $16.66/mo)",
   NCLEX_PLAN2_URL:"https://buy.stripe.com/00wfZabOq35l9WZcQs00003",
-  TELEGRAM_URL:"",                    // e.g. "https://t.me/yourchannel"
+  TELEGRAM_URL:"https://t.me/+LfXM_qAC4fA2OGY1",
+  WHATSAPP_URL:"https://chat.whatsapp.com/FePj4Ew2NkqHF14FLwMcKS",
   TIKTOK_URL:"https://www.tiktok.com/@nexgennurses_"
 };
 
@@ -542,6 +569,10 @@ document.querySelectorAll("[data-pay]").forEach(a=>{const v=SITE[a.dataset.pay];
 document.querySelectorAll("[data-cfg-host]").forEach(el=>{const v=SITE[el.dataset.cfgHost];if(v){try{el.textContent=new URL(v).host}catch(e){}}});
 document.getElementById("yr").textContent=new Date().getFullYear();
 
+// NCLEX preview tabs
+document.querySelectorAll("[data-nk]").forEach(b=>b.addEventListener("click",()=>{const bow=b.dataset.nk==="bow";
+  document.getElementById("nkMcq").hidden=bow;document.getElementById("nkBow").hidden=!bow;
+  document.querySelectorAll("[data-nk]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))}));
 // live app preview inside the device frame
 document.querySelectorAll("[data-live]").forEach(btn=>{
   btn.addEventListener("click",()=>{
