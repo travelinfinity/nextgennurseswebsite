@@ -350,6 +350,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .field input[aria-invalid="true"]{border-color:var(--coral)}
 .window{border-radius:12px;padding:12px 14px;font-size:15px;background:color-mix(in srgb,var(--mint) 14%,transparent);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
 .window.warn{background:color-mix(in srgb,var(--amber) 16%,transparent);border-color:color-mix(in srgb,var(--amber) 50%,transparent)}
+.btn-tg{background:#229ED9;color:#fff;box-shadow:0 8px 22px -10px #229ED9}
+.sent{display:grid;gap:10px;border-radius:12px;padding:14px;font-size:14.5px;background:color-mix(in srgb,#229ED9 12%,transparent);border:1px solid color-mix(in srgb,#229ED9 45%,transparent)}
+.sent textarea{font:500 14px/1.45 var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical;width:100%;box-sizing:border-box}
 .ferr{color:var(--coral-text);font-weight:700;font-size:14px;min-height:1em}
 .bform .btn{width:100%}
 .fine{font-size:13.5px;color:var(--muted)}
@@ -619,14 +622,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <div class="eyebrow">Reserve your face-to-face spot</div>
         <h2 style="margin-top:10px">Tell us your AHPRA OSCE exam date</h2>
         <p>The intensive must be completed 2–3 weeks before your exam, so we match you to an intake by your exam date. Places are limited to 8–10 students.</p>
-        <p class="fine" style="margin-top:16px">When you press the button, WhatsApp opens with your details already typed in. Press send and we'll reply to confirm availability and send your payment link.</p>
+        <p class="fine" style="margin-top:16px">Press <b>Send on Telegram</b>: your details are copied and a Telegram chat with us opens. Paste them in and press send. Prefer WhatsApp? Use the second button and your details will already be typed in. We'll reply to confirm availability and send your payment link.</p>
       </div>
       <form class="bform" id="f2fForm" novalidate>
         <div class="field"><label for="f2fName">Full name</label><input id="f2fName" name="name" type="text" autocomplete="name" placeholder="As it appears on your Ahpra application" required></div>
         <div class="field"><label for="f2fDate">AHPRA OSCE exam date</label><input id="f2fDate" name="examDate" type="date" required></div>
         <div class="window" id="f2fWindow" hidden></div>
         <div class="ferr" id="f2fErr" role="alert"></div>
-        <button class="btn btn-wa" type="submit"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>Send to WhatsApp</button>
+        <button class="btn btn-tg" type="submit" data-via="telegram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 3-20 8 7 2.5M22 3l-4 18-9-7.5M22 3 9 13.5V20l3.5-4"/></svg>Send on Telegram</button>
+        <button class="btn btn-line" type="submit" data-via="whatsapp"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>Or send on WhatsApp</button>
+        <div class="sent" id="f2fSent" hidden>
+          <b>Your details are copied.</b> Paste them into the Telegram chat and press send. If they didn't copy, copy them from here:
+          <textarea id="f2fMsg" readonly rows="5"></textarea>
+          <button class="btn btn-line" type="button" id="f2fCopy">Copy details</button>
+        </div>
       </form>
     </div>
   </div></section>
@@ -875,7 +884,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <h3 class="faq-h">Payments</h3>
       <details><summary>Is AHPRA RN OSCE Online Module a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
       <details><summary>How does NCLEX Hero billing work?</summary><p>Choose a monthly payment (A$42.99 each month) or pay every 3 months (A$84.99, about A$28.33 a month). Your plan renews automatically until you cancel, and you can cancel at any time.</p></details>
-      <details><summary>How do I book the OSCE Face-to-Face Intensive?</summary><p>Open the <a href="#f2f">AHPRA RN OSCE Face-to-Face</a> tab and send us your full name and AHPRA OSCE exam date on WhatsApp. The intensive (A$1,950) includes the online learning module, runs for 1 week and must be completed 2–3 weeks before your exam. Places are limited to 8–10 students per intake, and we'll send your payment link once your place is confirmed.</p></details>
+      <details><summary>How do I book the OSCE Face-to-Face Intensive?</summary><p>Open the <a href="#f2f">AHPRA RN OSCE Face-to-Face</a> tab and send us your full name and AHPRA OSCE exam date on Telegram or WhatsApp. The intensive (A$1,950) includes the online learning module, runs for 1 week and must be completed 2–3 weeks before your exam. Places are limited to 8–10 students per intake, and we'll send your payment link once your place is confirmed.</p></details>
       <h3 class="faq-h">About us</h3>
       <details><summary>Is this affiliated with Ahpra, the NMBA or NCSBN?</summary><p>No. NextGen Nurses is an independent study resource. The practice stations and questions are original teaching material, not real exam items. Always follow the current official candidate handbook for your exam.</p></details>
       <details><summary>When will OET and PTE prep be ready?</summary><p>They're in development. Join the Telegram group to hear first when they open.</p></details>
@@ -901,9 +910,11 @@ const SITE={
   OSCE_PRICE:"A$199",
   OSCE_PAY_URL:"https://buy.stripe.com/28EcMY8Ce0Xdfhj03G00005",
   OSCE_F2F_PRICE:"A$1,950",
-  // Face-to-face bookings are sent to this WhatsApp number.
-  // Country code + number, digits only, no + or spaces (e.g. Australian mobile 0412 345 678 -> "61412345678").
-  BOOKING_WHATSAPP_NUMBER:"",
+  // Face-to-face bookings go to these accounts.
+  // Phone numbers: country code + number, digits only, no + or spaces (0458 567 621 -> "61458567621").
+  BOOKING_TELEGRAM_PHONE:"61458567621",
+  BOOKING_TELEGRAM_USERNAME:"",   // optional: your Telegram username (no @). If set, the message is typed in for the student automatically.
+  BOOKING_WHATSAPP_NUMBER:"61458567621",
   NCLEX_PLAN1_NAME:"Monthly payment",
   NCLEX_PLAN1_PRICE:"A$42.99 billed every month",
   NCLEX_PLAN1_URL:"https://buy.stripe.com/cNi5kwf0C5dt8SV7w800007",
@@ -1004,18 +1015,35 @@ function countUp(){
   }
   dateEl.addEventListener("input",update);dateEl.addEventListener("change",update);
   nameEl.addEventListener("input",()=>nameEl.removeAttribute("aria-invalid"));
+  const sent=document.getElementById("f2fSent"),msgBox=document.getElementById("f2fMsg");
+  function copyText(t){
+    let ok=false;
+    try{msgBox.value=t;msgBox.focus();msgBox.select();ok=document.execCommand("copy")}catch(x){}
+    try{if(navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>{})}catch(x){}
+    return ok;
+  }
+  document.getElementById("f2fCopy").addEventListener("click",function(){copyText(msgBox.value);this.textContent="Copied"});
   form.addEventListener("submit",e=>{
-    e.preventDefault();err.textContent="";
+    e.preventDefault();err.textContent="";sent.hidden=true;
+    const via=(e.submitter&&e.submitter.dataset.via)||"telegram";
     const name=nameEl.value.trim().replace(/\s+/g," "),exam=parse(dateEl.value);
     if(name.length<3||!/\s/.test(name)){nameEl.setAttribute("aria-invalid","true");err.textContent="Please enter your full name (first and last name).";nameEl.focus();return}
     if(!exam){dateEl.setAttribute("aria-invalid","true");err.textContent="Please choose your AHPRA OSCE exam date.";dateEl.focus();return}
     if(exam<today){dateEl.setAttribute("aria-invalid","true");err.textContent="That date has already passed. Please check your exam date.";dateEl.focus();return}
-    const num=String(SITE.BOOKING_WHATSAPP_NUMBER||"").replace(/\D/g,"");
-    if(!num){err.textContent="Bookings are opening soon. Please message us on WhatsApp support in the meantime.";return}
     const w=windowFor(exam);
     const msg="Hi NextGen Nurses, I'd like to reserve a spot in the AHPRA RN OSCE Face-to-Face Intensive ("+SITE.OSCE_F2F_PRICE+").\n\n"+
       "Full name: "+name+"\nAHPRA OSCE exam date: "+fmt(exam)+"\nIntensive window (2–3 weeks before): "+fmtS(w.from)+" – "+fmtS(w.to);
-    window.open("https://wa.me/"+num+"?text="+encodeURIComponent(msg),"_blank","noopener");
+    if(via==="whatsapp"){
+      const num=String(SITE.BOOKING_WHATSAPP_NUMBER||"").replace(/\D/g,"");
+      if(!num){err.textContent="WhatsApp bookings aren't open yet. Please use Telegram.";return}
+      window.open("https://wa.me/"+num+"?text="+encodeURIComponent(msg),"_blank","noopener");return;
+    }
+    const user=String(SITE.BOOKING_TELEGRAM_USERNAME||"").replace(/^@/,"").trim();
+    const tel=String(SITE.BOOKING_TELEGRAM_PHONE||"").replace(/\D/g,"");
+    if(user){window.open("https://t.me/"+encodeURIComponent(user)+"?text="+encodeURIComponent(msg),"_blank","noopener");return}
+    if(!tel){err.textContent="Telegram bookings aren't open yet. Please use WhatsApp.";return}
+    sent.hidden=false;copyText(msg);
+    window.open("https://t.me/+"+tel,"_blank","noopener");
   });
 })();
 
