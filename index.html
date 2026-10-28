@@ -6,7 +6,7 @@
 <title>NextGen Nurses</title>
 <meta charset="utf-8">
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Exam preparation for internationally qualified nurses: AHPRA RN OSCE Prep, NCLEX Hero, and OET and PTE prep coming soon.">
+<meta name="description" content="Exam preparation for internationally qualified nurses: AHPRA RN OSCE Online Module, NCLEX Hero, and OET and PTE prep coming soon.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
@@ -81,7 +81,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tab .soon{font:700 9.5px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 5px;border-radius:5px;background:rgba(255,255,255,.1);color:var(--on-ink-dim)}
 .tab-ind{position:absolute;z-index:0;top:4px;bottom:4px;left:0;width:0;border-radius:10px;background:rgba(255,255,255,.1);box-shadow:inset 0 -3px 0 var(--ind,var(--mint));transition:transform .35s cubic-bezier(.3,.8,.2,1),width .35s cubic-bezier(.3,.8,.2,1),box-shadow .35s}
 .nav-cta{flex:none;min-height:42px;padding:10px 18px;font-size:14px}
-@media (max-width:1400px){.nav-cta{display:none}}
+.nav-cta{display:none}
+@media (min-width:761px){.tab{padding:10px 8px;font-size:14px}.tabs{gap:0}}
 @media (max-width:760px){
   .nav .wrap{flex-wrap:wrap;gap:6px 12px;padding-block:10px 4px}
   .tabs{order:3;width:100%;margin-left:0;padding-bottom:6px}
@@ -317,6 +318,58 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .plan .btn{min-width:96px}
 @media (max-width:760px){.prices,.prices.four{grid-template-columns:1fr}}
 
+
+/* ---------- face-to-face intensive ---------- */
+.facts{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:26px;display:grid;gap:4px;width:100%;max-width:480px;justify-self:center}
+.facts div{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:14px 0}
+.facts div + div{border-top:1px solid rgba(255,255,255,.1)}
+.facts i{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--mint) 18%,transparent);color:var(--mint)}
+.facts i svg{width:22px;height:22px}
+.facts b{display:block;font:800 18px/1.2 var(--f-display);color:var(--on-ink)}
+.facts span{display:block;font-size:14px;color:var(--on-ink-dim);margin-top:3px}
+.seats{display:inline-flex;align-items:center;gap:8px;font:700 12px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral);margin-top:18px}
+.seats::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.timing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface);margin-top:34px}
+.timing div{padding:16px 18px;display:grid;gap:4px}
+.timing div + div{border-left:1px solid var(--line)}
+.timing b{font:800 18px/1.2 var(--f-display)}
+.timing span{font-size:14px;color:var(--muted)}
+.timing .hit{background:color-mix(in srgb,var(--mint) 16%,transparent)}
+.timing .hit b{color:var(--teal)}
+@media (max-width:700px){.timing{grid-template-columns:1fr}.timing div + div{border-left:0;border-top:1px solid var(--line)}}
+.book{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--mint);border-radius:24px;padding:36px}
+@media (max-width:860px){.book{grid-template-columns:1fr;padding:24px;gap:26px}}
+.book h2{font-size:clamp(28px,3.4vw,40px)}
+.book > div > p{color:var(--muted);margin-top:12px}
+.bform{display:grid;gap:16px}
+.field{display:grid;gap:7px}
+.field label{font-weight:700;font-size:15px}
+.field input{font:500 17px var(--f-body);color:var(--fg);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;min-height:50px;width:100%;box-sizing:border-box}
+.field input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 25%,transparent)}
+.field input[aria-invalid="true"]{border-color:var(--coral)}
+.window{border-radius:12px;padding:12px 14px;font-size:15px;background:color-mix(in srgb,var(--mint) 14%,transparent);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
+.window.warn{background:color-mix(in srgb,var(--amber) 16%,transparent);border-color:color-mix(in srgb,var(--amber) 50%,transparent)}
+.ferr{color:var(--coral-text);font-weight:700;font-size:14px;min-height:1em}
+.bform .btn{width:100%}
+.fine{font-size:13.5px;color:var(--muted)}
+.promo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;background:var(--ink);color:var(--on-ink);border-radius:22px;padding:30px 32px}
+.promo h2{font-size:clamp(24px,3vw,34px)}
+.promo p{color:var(--on-ink-dim);margin-top:8px}
+@media (max-width:760px){.promo{grid-template-columns:1fr;padding:24px}}
+.pc.f2f{--c:var(--teal)}
+#osce-f2f,#f2f-book{scroll-margin-top:90px}
+.f2f-hero{position:relative;overflow:hidden;background:var(--ink);color:var(--on-ink);border-radius:24px;padding:40px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center}
+.f2f-hero::before{content:"";position:absolute;width:420px;height:420px;left:-140px;top:-180px;border-radius:50%;background:var(--mint);filter:blur(70px);opacity:.28;pointer-events:none}
+.f2f-hero > *{position:relative}
+@media (max-width:920px){.f2f-hero{grid-template-columns:1fr;padding:26px 22px;gap:28px}}
+.also{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px;color:var(--on-ink);text-decoration:none;font-size:15px;border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:10px 14px;transition:border-color .2s}
+.also:hover{border-color:var(--mint)}
+.also span{font:700 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;background:var(--mint);color:var(--mint-ink);padding:4px 7px;border-radius:6px}
+.also b{color:var(--mint)}
+.pc .seat-note{font:700 12px/1.3 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--coral-text)}
+.pc-stack{display:grid;gap:22px;align-content:start}
+
 /* coming soon */
 .soonbox{display:grid;gap:12px;max-width:520px;margin-top:22px}
 .build{height:10px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;position:relative}
@@ -386,7 +439,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <div class="tabs" id="tabs">
     <span class="tab-ind" id="tabInd" aria-hidden="true"></span>
     <a class="tab" href="#home" data-tab="home">Home</a>
-    <a class="tab" href="#osce" data-tab="osce" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Prep</a>
+    <a class="tab" href="#osce" data-tab="osce" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Online</a>
+    <a class="tab" href="#f2f" data-tab="f2f" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Face-to-Face</a>
     <a class="tab" href="#nclex" data-tab="nclex" style="--c:var(--coral)"><span class="dot"></span>NCLEX Hero</a>
     <a class="tab" href="#oet" data-tab="oet" style="--c:var(--violet)"><span class="dot"></span>OET<span class="soon">Soon</span></a>
     <a class="tab" href="#pte" data-tab="pte" style="--c:var(--amber)"><span class="dot"></span>PTE<span class="soon">Soon</span></a>
@@ -410,7 +464,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       </div>
       <div class="rise" style="--i:1;display:grid;gap:22px">
         <p class="lede">Station-by-station OSCE practice for Australian registration, NCLEX-RN preparation for the US, and English test prep on the way. Built by nurses who know what examiners look for.</p>
-        <div class="ctas"><a class="btn btn-mint" href="#osce">Explore OSCE Prep</a><a class="btn btn-coral" href="#nclex">Explore NCLEX Hero</a></div>
+        <div class="ctas"><a class="btn btn-mint" href="#osce">Explore OSCE Online</a><a class="btn btn-coral" href="#nclex">Explore NCLEX Hero</a></div>
       </div>
     </div>
     <svg class="ecg" viewBox="0 0 1600 70" preserveAspectRatio="none" aria-hidden="true"><path id="ecgPath"/></svg>
@@ -428,7 +482,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <section class="section"><div class="wrap">
     <div class="head"><div class="eyebrow">Choose your exam</div><h2>One academy for every exam between you and registration</h2><p>Tap an exam to see what's inside.</p></div>
     <div class="exams">
-      <a class="exam osce rise" style="--i:0" href="#osce"><span class="status">Live now</span><span class="where">Australia · Ahpra</span><h3>AHPRA RN OSCE Prep</h3><p>Timed station practice with examiner cues, rubrics and a full 10-station mock circuit.</p><span class="go">Explore <i>→</i></span></a>
+      <a class="exam osce rise" style="--i:0" href="#osce"><span class="status">Live now</span><span class="where">Australia · Ahpra</span><h3>AHPRA RN OSCE</h3><p>Study online with timed stations, rubrics and a mock circuit, or join the 1-week face-to-face intensive in a hospital simulation lab.</p><span class="go">Explore <i>→</i></span></a>
       <a class="exam nclex rise" style="--i:1" href="#nclex"><span class="status">Live now</span><span class="where">United States · NCSBN</span><h3>NCLEX Hero</h3><p>Next Generation question formats, case studies and an adaptive exam with a readiness report.</p><span class="go">Explore <i>→</i></span></a>
       <a class="exam oet rise" style="--i:2" href="#oet"><span class="status">Coming soon</span><span class="where">English · Healthcare</span><h3>OET Prep</h3><p>English test preparation for nurses, built around healthcare communication.</p><span class="go">Learn more <i>→</i></span></a>
       <a class="exam pte rise" style="--i:3" href="#pte"><span class="status">Coming soon</span><span class="where">English · Academic</span><h3>PTE Prep</h3><p>PTE Academic preparation for nurses meeting the English standard.</p><span class="go">Learn more <i>→</i></span></a>
@@ -438,7 +492,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <section class="section" style="padding-top:0"><div class="wrap">
     <div class="head"><div class="eyebrow">Getting started</div><h2>From sign-up to your first practice session</h2></div>
     <div class="steps">
-      <div class="step rise" style="--i:0"><span class="n">STEP 1</span><h3>Choose your exam</h3><p>Pick AHPRA RN OSCE Prep, NCLEX Hero or both, and check out securely with Stripe.</p></div>
+      <div class="step rise" style="--i:0"><span class="n">STEP 1</span><h3>Choose your exam</h3><p>Pick the OSCE Online Module, Face-to-Face Intensive or NCLEX Hero, and check out securely with Stripe.</p></div>
       <div class="step rise" style="--i:1"><span class="n">STEP 2</span><h3>Create your account</h3><p>Sign up in the app with the same email you used at checkout. Your access is unlocked on that account.</p></div>
       <div class="step rise" style="--i:2"><span class="n">STEP 3</span><h3>Practise against the clock</h3><p>Work through stations and questions, read every rationale, and repeat what needs more work.</p></div>
     </div>
@@ -448,18 +502,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="eyebrow" style="color:var(--mint)">Your registration is one exam away</div>
     <h2>Start practising today.</h2>
     <p>Create your account, unlock your exam and sit your first practice station tonight.</p>
-    <div class="ctas"><a class="btn btn-mint" data-href="OSCE_URL" href="#" target="_blank" rel="noopener">Start OSCE Prep</a><a class="btn btn-coral" data-href="NCLEX_URL" href="#" target="_blank" rel="noopener">Start NCLEX Hero</a></div>
+    <div class="ctas"><a class="btn btn-mint" data-href="OSCE_URL" href="#" target="_blank" rel="noopener">Start OSCE Online</a><a class="btn btn-coral" data-href="NCLEX_URL" href="#" target="_blank" rel="noopener">Start NCLEX Hero</a></div>
   </div></div></section>
 </section>
 
 <!-- =================================================================== OSCE -->
-<section class="panel" data-panel="osce" aria-label="AHPRA RN OSCE Prep" hidden>
+<section class="panel" data-panel="osce" aria-label="AHPRA RN OSCE Online Module" hidden>
   <div class="phead" style="--pc:var(--mint)">
     <span class="blob a"></span><span class="blob b"></span>
     <div class="wrap">
       <div class="rise" style="--i:0">
         <span class="tag">Australia · Ahpra RN OSCE</span>
-        <h1 style="margin-top:16px">AHPRA RN OSCE Prep</h1>
+        <h1 style="margin-top:16px">AHPRA RN OSCE Online Module</h1>
         <p class="lede">Rehearse every station the way it runs on the day: read the candidate instructions, perform against the clock, reveal the examiner cue, then mark yourself against a rubric with critical safety items.</p>
         <div class="price-row">
           <div class="price"><b data-cfg="OSCE_PRICE">A$199</b><span>one-time · lifetime access</span></div>
@@ -469,7 +523,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <div class="device rise" style="--i:1">
         <div class="screen"><div class="screen-bar"><i></i><i></i><i></i><span data-cfg-host="OSCE_URL">OSCE Prep</span></div>
           <div class="viewport" id="vpOsce">
-            <div class="mk" aria-label="Preview of the AHPRA RN OSCE Prep app">
+            <div class="mk" aria-label="Preview of the AHPRA RN OSCE Online Module app">
               <div class="mk-top"><b>NextGen Nurses · RN OSCE</b><span class="mk-timer"><em id="mkPhase">PERFORM</em><span id="mkClock">08:00</span></span></div>
               <div class="mk-body">
                 <div class="mk-rail" id="mkRail"><div class="ok"><i>S0</i>Universal approach</div><div class="ok"><i>S1</i>Vital signs</div><div class="on"><i>S3</i>Transfusion reaction</div><div><i>S4</i>Medication round</div><div><i>S6</i>ISBAR handover</div><div><i>S11</i>Mental state exam</div></div>
@@ -487,7 +541,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       </div>
     </div>
   </div>
-
   <section class="section"><div class="wrap">
     <div class="head"><div class="eyebrow">The station rhythm</div><h2>Practise to the same clock as the exam room</h2><p>Every station runs with reading time, performance time and the bell, so the pace feels familiar on the day.</p></div>
     <div class="rhythm" aria-label="Station timing">
@@ -513,9 +566,76 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
   <section class="section" style="padding-top:0"><div class="wrap">
     <div class="faq">
-      <details><summary>Is AHPRA RN OSCE Prep really a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
+      <details><summary>Is AHPRA RN OSCE Online Module really a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
       <details><summary>How do I get access after I pay?</summary><p>Create an account in the app with the same email you used at checkout. Your account is unlocked once your purchase is confirmed, and you'll see the full course the next time you sign in.</p></details>
       <details><summary>Is this the official Ahpra OSCE?</summary><p>No. This is an independent study resource with original practice stations, not real exam items. Always follow the current NMBA candidate handbook.</p></details>
+      <details><summary>What is the difference between the Online Module and the Face-to-Face Intensive?</summary><p>The AHPRA RN OSCE Online Module (A$199) is the online app you study at your own pace. The Face-to-Face Intensive (A$1,950) includes that same online module, plus a 1-week in-person course in a hospital clinical simulation lab where an OSCE trainer observes you closely as you perform the stations.</p></details>
+    </div>
+  </div></section>
+</section>
+
+<!-- =================================================================== OSCE FACE-TO-FACE -->
+<section class="panel" data-panel="f2f" aria-label="AHPRA RN OSCE Face-to-Face Intensive" hidden>
+  <div class="phead" style="--pc:var(--mint)">
+    <span class="blob a"></span><span class="blob b"></span>
+    <div class="wrap">
+      <div class="rise" style="--i:0">
+        <span class="tag">Australia · Ahpra RN OSCE · Face to face</span>
+        <h1 style="margin-top:16px">AHPRA RN OSCE Face-to-Face Intensive</h1>
+        <p class="lede">A 1-week intensive in a hospital clinical simulation lab. You perform real OSCE stations with mannequins, equipment and an examiner-style trainer watching every step. It must be completed 2–3 weeks before your exam date, and the online learning module is included.</p>
+        <span class="seats">Limited slots · 8–10 students per intake</span>
+        <div class="price-row">
+          <div class="price"><b data-cfg="OSCE_F2F_PRICE">A$1,950</b><span>per student · includes the online learning module</span></div>
+          <div class="ctas"><a class="btn btn-mint" href="#f2f-book" data-scroll="f2f-book">Reserve your spot</a></div>
+        </div>
+      </div>
+      <div class="facts rise" style="--i:1">
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></i><p style="margin:0"><b>Online learning module included</b><span>Full access to the AHPRA RN OSCE Online Module before and after the week</span></p></div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M12 9v6M9 12h6"/></svg></i><p style="margin:0"><b>Hospital clinical simulation lab</b><span>Real ward setting, equipment and mannequins</span></p></div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></i><p style="margin:0"><b>1-week intensive</b><span>Full days of station practice, feedback and mock circuits</span></p></div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c2.8.2 5 2.2 5 5"/></svg></i><p style="margin:0"><b>8–10 students only</b><span>Intensive prep that needs close observation by the OSCE trainer</span></p></div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></i><p style="margin:0"><b>2–3 weeks before your exam</b><span>Timed so your skills peak on exam day</span></p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section"><div class="wrap">
+    <div class="head"><div class="eyebrow">What you get face to face</div><h2>Hands-on practice with an OSCE trainer watching every step</h2><p>This is an intensive prep that needs close observation by the OSCE trainer, so each intake is kept to 8–10 students. You also get the full online learning module to prepare before the week.</p></div>
+    <div class="fgrid" style="--fc:var(--teal)">
+      <div class="feat rise" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M12 9v6M9 12h6"/></svg><h3>Real clinical setting</h3><p>Practise in a hospital clinical simulation lab with beds, mannequins, IV equipment and charts, just like the exam room.</p></div>
+      <div class="feat rise" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Close observation</h3><p>The OSCE trainer watches you perform and stops you on critical safety steps, communication and documentation.</p></div>
+      <div class="feat rise" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg><h3>Timed mock circuits</h3><p>Run stations to exam timing with reading time, performance time and the bell, then debrief straight away.</p></div>
+    </div>
+    <div class="timing" aria-label="When to attend">
+      <div><b>4+ weeks out</b><span>Study the stations in the included online module</span></div>
+      <div class="hit"><b>2–3 weeks out</b><span>Complete the face-to-face intensive</span></div>
+      <div><b>Final 2 weeks</b><span>Polish weak stations, then sit your exam</span></div>
+    </div>
+  </div></section>
+
+  <section class="section" style="padding-top:0" id="f2f-book"><div class="wrap">
+    <div class="book rise" style="--i:0">
+      <div>
+        <div class="eyebrow">Reserve your face-to-face spot</div>
+        <h2 style="margin-top:10px">Tell us your AHPRA OSCE exam date</h2>
+        <p>The intensive must be completed 2–3 weeks before your exam, so we match you to an intake by your exam date. Places are limited to 8–10 students.</p>
+        <p class="fine" style="margin-top:16px">When you press the button, WhatsApp opens with your details already typed in. Press send and we'll reply to confirm availability and send your payment link.</p>
+      </div>
+      <form class="bform" id="f2fForm" novalidate>
+        <div class="field"><label for="f2fName">Full name</label><input id="f2fName" name="name" type="text" autocomplete="name" placeholder="As it appears on your Ahpra application" required></div>
+        <div class="field"><label for="f2fDate">AHPRA OSCE exam date</label><input id="f2fDate" name="examDate" type="date" required></div>
+        <div class="window" id="f2fWindow" hidden></div>
+        <div class="ferr" id="f2fErr" role="alert"></div>
+        <button class="btn btn-wa" type="submit"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>Send to WhatsApp</button>
+      </form>
+    </div>
+  </div></section>
+  <section class="section" style="padding-top:0"><div class="wrap">
+    <div class="faq">
+      <details><summary>What is the difference between the Online Module and the Face-to-Face Intensive?</summary><p>The AHPRA RN OSCE Online Module (A$199) is the online app you study at your own pace. The Face-to-Face Intensive (A$1,950) includes that same online module, plus a 1-week in-person course in a hospital clinical simulation lab where an OSCE trainer observes you closely as you perform the stations.</p></details>
+      <details><summary>Why must the intensive be 2–3 weeks before my exam?</summary><p>It leaves enough time to fix the feedback from your trainer while the hands-on practice is still fresh, without leaving it so long that you lose the rhythm of the stations.</p></details>
+      <details><summary>Why are face-to-face places limited?</summary><p>This is an intensive prep that needs close observation by the OSCE trainer. Keeping each intake to 8–10 students means everyone gets hands-on turns and individual feedback.</p></details>
+      <details><summary>How do I pay for the face-to-face intensive?</summary><p>Send us your full name and exam date using the form above. We'll confirm a place in the right intake and send you a secure Stripe payment link. Your spot is held once payment is received.</p></details>
     </div>
   </div></section>
 </section>
@@ -688,16 +808,24 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <!-- =================================================================== PRICING -->
 <section class="panel" data-panel="pricing" aria-label="Pricing" hidden>
   <section class="section"><div class="wrap">
-    <div class="head"><div class="eyebrow">Pricing</div><h2>Simple pricing for the exam you're sitting</h2><p>AHPRA RN OSCE Prep is a single payment with lifetime access. NCLEX Hero is a flexible subscription you can cancel at any time.</p></div>
+    <div class="head"><div class="eyebrow">Pricing</div><h2>Simple pricing for the exam you're sitting</h2><p>The AHPRA RN OSCE Online Module is a single payment with lifetime access, and the Face-to-Face Intensive is a 1-week in-person course for 8–10 students that includes the Online Module. NCLEX Hero is a flexible subscription you can cancel at any time.</p></div>
     <div class="prices four">
       <div class="pc osce rise" style="--i:0">
         <span class="where">Australia · Ahpra RN OSCE</span>
-        <h3>AHPRA RN OSCE Prep</h3>
+        <h3>AHPRA RN OSCE Online Module</h3>
         <div><div class="big" data-cfg="OSCE_PRICE">A$199</div><div class="per">one-time payment · lifetime access, including resits</div></div>
         <ul><li>13 practice stations with examiner cues</li><li>Rubrics with critical safety items</li><li>Full 10-station mock circuit</li><li>Narrated skill demonstrations</li><li>Updates included</li></ul>
-        <a class="btn btn-mint" data-pay="OSCE_PAY_URL" href="#" target="_blank" rel="noopener">Buy AHPRA RN OSCE Prep</a>
+        <a class="btn btn-mint" data-pay="OSCE_PAY_URL" href="#" target="_blank" rel="noopener">Buy the Online Module</a>
       </div>
-      <div class="pc us rise" style="--i:1">
+      <div class="pc f2f rise" style="--i:1">
+        <span class="where">Australia · Ahpra RN OSCE · In person</span>
+        <h3>AHPRA RN OSCE Face-to-Face Intensive</h3>
+        <div><div class="big" data-cfg="OSCE_F2F_PRICE">A$1,950</div><div class="per">per student · 1-week intensive + online module</div></div>
+        <span class="seat-note">Limited to 8–10 students per intake</span>
+        <ul><li>AHPRA RN OSCE Online Module included</li><li>Hospital clinical simulation lab setting</li><li>Close observation by an OSCE trainer</li><li>Timed mock circuits with individual feedback</li><li>Completed 2–3 weeks before your exam date</li></ul>
+        <a class="btn btn-mint" href="#f2f-book">Reserve your spot</a>
+      </div>
+      <div class="pc us rise" style="--i:2">
         <span class="where">United States · NCLEX-RN</span>
         <h3>NCLEX Hero</h3>
         <ul><li>Every Next Generation question format</li><li>Unfolding case studies</li><li>Adaptive exam with readiness report</li><li>Rationales, mnemonics and strategies</li></ul>
@@ -706,19 +834,21 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
           <div class="plan"><div><b data-cfg="NCLEX_PLAN1_NAME">Monthly payment</b><span data-cfg="NCLEX_PLAN1_PRICE">A$42.99 billed every month</span></div><a class="btn btn-coral" data-pay="NCLEX_PLAN1_URL" href="#" target="_blank" rel="noopener">Buy</a></div>
         </div>
       </div>
-      <div class="pc oet rise" style="--i:2">
+      <div class="pc-stack">
+      <div class="pc oet rise" style="--i:3">
         <span class="where">English · Healthcare</span>
         <h3>OET Prep</h3>
         <div class="big" style="font-size:34px">Coming soon</div>
         <p class="per">Join our Telegram group to hear first when it opens.</p>
         <span class="btn btn-soon" style="color:var(--violet-text)" aria-disabled="true">Link coming soon</span>
       </div>
-      <div class="pc pte rise" style="--i:3">
+      <div class="pc pte rise" style="--i:4">
         <span class="where">English · Academic</span>
         <h3>PTE Prep</h3>
         <div class="big" style="font-size:34px">Coming soon</div>
         <p class="per">Join our Telegram group to hear first when it opens.</p>
         <span class="btn btn-soon" style="color:var(--amber-text)" aria-disabled="true">Link coming soon</span>
+      </div>
       </div>
     </div>
   </div></section>
@@ -743,8 +873,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <details><summary>I'm preparing for both exams. Do I need two accounts?</summary><p>Each app has its own sign-in. You can use the same email for both.</p></details>
       <details><summary>Can I use it on my phone?</summary><p>Yes. Both apps work in your phone's browser, and the videos are filmed in portrait for phones.</p></details>
       <h3 class="faq-h">Payments</h3>
-      <details><summary>Is AHPRA RN OSCE Prep a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
+      <details><summary>Is AHPRA RN OSCE Online Module a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
       <details><summary>How does NCLEX Hero billing work?</summary><p>Choose a monthly payment (A$42.99 each month) or pay every 3 months (A$84.99, about A$28.33 a month). Your plan renews automatically until you cancel, and you can cancel at any time.</p></details>
+      <details><summary>How do I book the OSCE Face-to-Face Intensive?</summary><p>Open the <a href="#f2f">AHPRA RN OSCE Face-to-Face</a> tab and send us your full name and AHPRA OSCE exam date on WhatsApp. The intensive (A$1,950) includes the online learning module, runs for 1 week and must be completed 2–3 weeks before your exam. Places are limited to 8–10 students per intake, and we'll send your payment link once your place is confirmed.</p></details>
       <h3 class="faq-h">About us</h3>
       <details><summary>Is this affiliated with Ahpra, the NMBA or NCSBN?</summary><p>No. NextGen Nurses is an independent study resource. The practice stations and questions are original teaching material, not real exam items. Always follow the current official candidate handbook for your exam.</p></details>
       <details><summary>When will OET and PTE prep be ready?</summary><p>They're in development. Join the Telegram group to hear first when they open.</p></details>
@@ -755,7 +886,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <footer class="foot"><div class="wrap">
   <a class="brand" href="#home"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#062A2A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-5 4 10 2-5h8"/></svg></span>NextGen Nurses</a>
-  <nav aria-label="Footer"><a href="#osce">AHPRA RN OSCE Prep</a><a href="#nclex">NCLEX Hero</a><a href="#oet">OET</a><a href="#pte">PTE</a><a href="#pricing">Pricing</a><a href="#faq">FAQ &amp; support</a></nav>
+  <nav aria-label="Footer"><a href="#osce">AHPRA RN OSCE Online</a><a href="#f2f">AHPRA RN OSCE Face-to-Face</a><a href="#nclex">NCLEX Hero</a><a href="#oet">OET</a><a href="#pte">PTE</a><a href="#pricing">Pricing</a><a href="#faq">FAQ &amp; support</a></nav>
   <p>Independent exam preparation for internationally qualified nurses. Not affiliated with or endorsed by Ahpra, the Nursing and Midwifery Board of Australia, the National Council of State Boards of Nursing, OET or Pearson. NCLEX® and NCLEX-RN® are registered trademarks of the National Council of State Boards of Nursing, Inc. OET is a trademark of Cambridge Boxhill Language Assessment. PTE Academic is a trademark of Pearson.</p>
   <p>© <span id="yr">2026</span> NextGen Nurses · TikTok <a data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">@nexgennurses_</a> · <a data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Telegram</a> · <a data-href="WHATSAPP_URL" href="#" target="_blank" rel="noopener">WhatsApp support</a></p>
 </div></footer>
@@ -769,6 +900,10 @@ const SITE={
   NCLEX_URL:"https://nclex.nextgennursestraining.com/",
   OSCE_PRICE:"A$199",
   OSCE_PAY_URL:"https://buy.stripe.com/28EcMY8Ce0Xdfhj03G00005",
+  OSCE_F2F_PRICE:"A$1,950",
+  // Face-to-face bookings are sent to this WhatsApp number.
+  // Country code + number, digits only, no + or spaces (e.g. Australian mobile 0412 345 678 -> "61412345678").
+  BOOKING_WHATSAPP_NUMBER:"",
   NCLEX_PLAN1_NAME:"Monthly payment",
   NCLEX_PLAN1_PRICE:"A$42.99 billed every month",
   NCLEX_PLAN1_URL:"https://buy.stripe.com/cNi5kwf0C5dt8SV7w800007",
@@ -791,7 +926,7 @@ document.querySelectorAll("[data-cfg-host]").forEach(el=>{const v=SITE[el.datase
 document.getElementById("yr").textContent=new Date().getFullYear();
 
 /* ---------- tabs ---------- */
-const TABS=["home","osce","nclex","oet","pte","pricing","faq"];
+const TABS=["home","osce","f2f","nclex","oet","pte","pricing","faq"];
 const tabEls=[...document.querySelectorAll(".tab")], ind=document.getElementById("tabInd"), tabsBox=document.getElementById("tabs");
 function moveInd(t){
   if(!t)return;
@@ -809,12 +944,13 @@ function show(name,fromNav){
   const cur=tabEls.find(t=>t.dataset.tab===name);moveInd(cur);
   if(cur){const l=cur.offsetLeft-tabsBox.clientWidth/2+cur.offsetWidth/2;tabsBox.scrollTo({left:l,behavior:reduce?"auto":"smooth"})}
   if(fromNav)window.scrollTo({top:0,behavior:"auto"});
-  const TT={home:"",osce:"AHPRA RN OSCE Prep",nclex:"NCLEX Hero",oet:"OET Prep",pte:"PTE Prep",pricing:"Pricing",faq:"FAQ & support"};
+  const TT={home:"",osce:"AHPRA RN OSCE Online Module",f2f:"AHPRA RN OSCE Face-to-Face Intensive",nclex:"NCLEX Hero",oet:"OET Prep",pte:"PTE Prep",pricing:"Pricing",faq:"FAQ & support"};
   document.title=TT[name]?TT[name]+" · NextGen Nurses":"NextGen Nurses";
   if(name==="home")countUp();
 }
 function route(fromNav){
   const h=(location.hash||"").slice(1);
+  if(h==="f2f-book"){show("f2f",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
   if(h==="nclex-plans"){show("nclex",false);requestAnimationFrame(()=>document.getElementById("nclex-plans").scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
   show(h||"home",fromNav);
 }
@@ -847,6 +983,42 @@ function countUp(){
   for(let i=0;i<beats;i++){const x=i*bw;d+=` L${x+bw*.18} ${b} Q${x+bw*.23} ${b-8} ${x+bw*.28} ${b} L${x+bw*.36} ${b} L${x+bw*.39} ${b+7} L${x+bw*.43} 4 L${x+bw*.47} ${b+16} L${x+bw*.51} ${b} L${x+bw*.64} ${b} Q${x+bw*.73} ${b-13} ${x+bw*.82} ${b} L${x+bw} ${b}`}
   document.getElementById("ecgPath").setAttribute("d",d)})();
 
+/* ---------- face-to-face booking: name + exam date -> WhatsApp ---------- */
+(function(){
+  const form=document.getElementById("f2fForm");if(!form)return;
+  const nameEl=document.getElementById("f2fName"),dateEl=document.getElementById("f2fDate"),win=document.getElementById("f2fWindow"),err=document.getElementById("f2fErr");
+  const DAY=864e5;
+  const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  const today=new Date();today.setHours(0,0,0,0);
+  dateEl.min=iso(today);
+  const fmt=d=>d.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"long",year:"numeric"});
+  const fmtS=d=>d.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"});
+  function parse(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v))return null;const [y,m,d]=v.split("-").map(Number);const x=new Date(y,m-1,d);return isNaN(x)?null:x}
+  function windowFor(exam){return{from:new Date(exam-21*DAY),to:new Date(exam-14*DAY)}}
+  function update(){
+    const exam=parse(dateEl.value);dateEl.removeAttribute("aria-invalid");
+    if(!exam){win.hidden=true;return}
+    const w=windowFor(exam);win.hidden=false;
+    if(w.to<today){win.className="window warn";win.textContent="Your exam is less than 2 weeks away. Send your details anyway and we'll tell you if a place can still work for you."}
+    else{win.className="window";win.innerHTML="";const b=document.createElement("b");b.textContent="Your intensive window: ";win.append(b,fmtS(w.from<today?today:w.from)+" – "+fmtS(w.to))}
+  }
+  dateEl.addEventListener("input",update);dateEl.addEventListener("change",update);
+  nameEl.addEventListener("input",()=>nameEl.removeAttribute("aria-invalid"));
+  form.addEventListener("submit",e=>{
+    e.preventDefault();err.textContent="";
+    const name=nameEl.value.trim().replace(/\s+/g," "),exam=parse(dateEl.value);
+    if(name.length<3||!/\s/.test(name)){nameEl.setAttribute("aria-invalid","true");err.textContent="Please enter your full name (first and last name).";nameEl.focus();return}
+    if(!exam){dateEl.setAttribute("aria-invalid","true");err.textContent="Please choose your AHPRA OSCE exam date.";dateEl.focus();return}
+    if(exam<today){dateEl.setAttribute("aria-invalid","true");err.textContent="That date has already passed. Please check your exam date.";dateEl.focus();return}
+    const num=String(SITE.BOOKING_WHATSAPP_NUMBER||"").replace(/\D/g,"");
+    if(!num){err.textContent="Bookings are opening soon. Please message us on WhatsApp support in the meantime.";return}
+    const w=windowFor(exam);
+    const msg="Hi NextGen Nurses, I'd like to reserve a spot in the AHPRA RN OSCE Face-to-Face Intensive ("+SITE.OSCE_F2F_PRICE+").\n\n"+
+      "Full name: "+name+"\nAHPRA OSCE exam date: "+fmt(exam)+"\nIntensive window (2–3 weeks before): "+fmtS(w.from)+" – "+fmtS(w.to);
+    window.open("https://wa.me/"+num+"?text="+encodeURIComponent(msg),"_blank","noopener");
+  });
+})();
+
 /* ---------- OSCE preview: station clock + moving station rail ---------- */
 (function(){if(reduce)return;let s=480;const el=document.getElementById("mkClock"),rail=[...document.querySelectorAll("#mkRail > div")];let r=2;
   setInterval(()=>{s=s>0?s-1:480;el.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000);
@@ -871,7 +1043,7 @@ document.querySelectorAll("[data-live]").forEach(btn=>{
     const key=btn.dataset.live,url=SITE[key==="osce"?"OSCE_URL":"NCLEX_URL"],vp=document.getElementById(key==="osce"?"vpOsce":"vpNclex"),note=btn.previousElementSibling;
     if(!url){note.textContent="Add the app's address in the site settings to enable the live preview.";return}
     if(vp.querySelector("iframe")){vp.querySelector("iframe").remove();vp.firstElementChild.hidden=false;btn.textContent="Try it live here";note.textContent="Preview of the app";return}
-    const f=document.createElement("iframe");f.src=url;f.title=key==="osce"?"AHPRA RN OSCE Prep app":"NCLEX Hero app";f.loading="lazy";
+    const f=document.createElement("iframe");f.src=url;f.title=key==="osce"?"AHPRA RN OSCE Online Module app":"NCLEX Hero app";f.loading="lazy";
     vp.firstElementChild.hidden=true;vp.appendChild(f);btn.textContent="Show preview image";
     note.innerHTML="Live app. For the best experience <a href=\""+url+"\" target=\"_blank\" rel=\"noopener\">open it full screen</a>.";
   });
