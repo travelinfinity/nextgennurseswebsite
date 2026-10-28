@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}.f2f-pay{margin-top:18px;padding:16px 18px;border-radius:14px;background:rgba(127,127,127,.08);border:1px solid rgba(127,127,127,.25);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.f2f-pay b{display:block}.f2f-pay span{display:block;font-size:14px;opacity:.8;margin-top:2px}
+</style>
 <title>NextGen Nurses</title>
 <meta charset="utf-8">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -589,7 +591,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <span class="seats">Limited slots · 8–10 students per intake</span>
         <div class="price-row">
           <div class="price"><b data-cfg="OSCE_F2F_PRICE">A$1,950</b><span>per student · includes the online learning module</span></div>
-          <div class="ctas"><a class="btn btn-mint" href="#f2f-book" data-scroll="f2f-book">Reserve your spot</a></div>
+          <div class="ctas"><a class="btn btn-mint" href="#f2f-book" data-scroll="f2f-book">Reserve your spot</a><a class="btn btn-ghost-ink" data-pay="OSCE_F2F_PAY_URL" href="https://buy.stripe.com/8x2aEQbOq49pgln2bO0000a" target="_blank" rel="noopener">Pay now</a></div>
         </div>
       </div>
       <div class="facts rise" style="--i:1">
@@ -622,7 +624,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <div class="eyebrow">Reserve your face-to-face spot</div>
         <h2 style="margin-top:10px">Tell us your AHPRA OSCE exam date</h2>
         <p>The intensive must be completed 2–3 weeks before your exam, so we match you to an intake by your exam date. Places are limited to 8–10 students.</p>
-        <p class="fine" style="margin-top:16px">Press <b>Send on Telegram</b>: your details are copied and a Telegram chat with us opens. Paste them in and press send. Prefer WhatsApp? Use the second button and your details will already be typed in. We'll reply to confirm availability and send your payment link.</p>
+        <p class="fine" style="margin-top:16px">Press <b>Send on Telegram</b>: your details are copied and a Telegram chat with us opens. Paste them in and press send. Prefer WhatsApp? Use the second button and your details will already be typed in. We'll reply to confirm availability in your intake.</p>
+        <div class="f2f-pay"><div><b>Spot confirmed, or ready to pay?</b><span>Pay the A$1,950 intensive securely with Stripe. Your place is held once payment is received.</span></div><a class="btn btn-mint" data-pay="OSCE_F2F_PAY_URL" href="https://buy.stripe.com/8x2aEQbOq49pgln2bO0000a" target="_blank" rel="noopener">Pay securely now</a></div>
       </div>
       <form class="bform" id="f2fForm" novalidate>
         <div class="field"><label for="f2fName">Full name</label><input id="f2fName" name="name" type="text" autocomplete="name" placeholder="As it appears on your Ahpra application" required></div>
@@ -644,7 +647,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <details><summary>What is the difference between the Online Module and the Face-to-Face Intensive?</summary><p>The AHPRA RN OSCE Online Module (A$199) is the online app you study at your own pace. The Face-to-Face Intensive (A$1,950) includes that same online module, plus a 1-week in-person course in a hospital clinical simulation lab where an OSCE trainer observes you closely as you perform the stations.</p></details>
       <details><summary>Why must the intensive be 2–3 weeks before my exam?</summary><p>It leaves enough time to fix the feedback from your trainer while the hands-on practice is still fresh, without leaving it so long that you lose the rhythm of the stations.</p></details>
       <details><summary>Why are face-to-face places limited?</summary><p>This is an intensive prep that needs close observation by the OSCE trainer. Keeping each intake to 8–10 students means everyone gets hands-on turns and individual feedback.</p></details>
-      <details><summary>How do I pay for the face-to-face intensive?</summary><p>Send us your full name and exam date using the form above. We'll confirm a place in the right intake and send you a secure Stripe payment link. Your spot is held once payment is received.</p></details>
+      <details><summary>How do I pay for the face-to-face intensive?</summary><p>Send us your full name and exam date using the form above. We'll confirm a place in the right intake. Then pay securely with the <b>Pay now</b> button (Stripe). Your spot is held once payment is received.</p></details>
     </div>
   </div></section>
 </section>
@@ -832,7 +835,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <div><div class="big" data-cfg="OSCE_F2F_PRICE">A$1,950</div><div class="per">per student · 1-week intensive + online module</div></div>
         <span class="seat-note">Limited to 8–10 students per intake</span>
         <ul><li>AHPRA RN OSCE Online Module included</li><li>Hospital clinical simulation lab setting</li><li>Close observation by an OSCE trainer</li><li>Timed mock circuits with individual feedback</li><li>Completed 2–3 weeks before your exam date</li></ul>
-        <a class="btn btn-mint" href="#f2f-book">Reserve your spot</a>
+        <div class="ctas" style="margin-top:auto"><a class="btn btn-mint" href="#f2f-book">Reserve your spot</a><a class="btn btn-line" data-pay="OSCE_F2F_PAY_URL" href="https://buy.stripe.com/8x2aEQbOq49pgln2bO0000a" target="_blank" rel="noopener">Pay now · A$1,950</a></div>
       </div>
       <div class="pc us rise" style="--i:2">
         <span class="where">United States · NCLEX-RN</span>
@@ -884,7 +887,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <h3 class="faq-h">Payments</h3>
       <details><summary>Is AHPRA RN OSCE Online Module a one-time payment?</summary><p>Yes. You pay once and keep access for your first sitting and any resit, with content updates included.</p></details>
       <details><summary>How does NCLEX Hero billing work?</summary><p>Choose a monthly payment (A$42.99 each month) or pay every 3 months (A$84.99, about A$28.33 a month). Your plan renews automatically until you cancel, and you can cancel at any time.</p></details>
-      <details><summary>How do I book the OSCE Face-to-Face Intensive?</summary><p>Open the <a href="#f2f">AHPRA RN OSCE Face-to-Face</a> tab and send us your full name and AHPRA OSCE exam date on Telegram or WhatsApp. The intensive (A$1,950) includes the online learning module, runs for 1 week and must be completed 2–3 weeks before your exam. Places are limited to 8–10 students per intake, and we'll send your payment link once your place is confirmed.</p></details>
+      <details><summary>How do I book the OSCE Face-to-Face Intensive?</summary><p>Open the <a href="#f2f">AHPRA RN OSCE Face-to-Face</a> tab, send us your full name and AHPRA OSCE exam date on Telegram or WhatsApp, then pay with the <b>Pay now</b> button (Stripe). The intensive (A$1,950) includes the online learning module, runs for 1 week and must be completed 2–3 weeks before your exam. Places are limited to 8–10 students per intake, and we'll send your payment link once your place is confirmed.</p></details>
       <h3 class="faq-h">About us</h3>
       <details><summary>Is this affiliated with Ahpra, the NMBA or NCSBN?</summary><p>No. NextGen Nurses is an independent study resource. The practice stations and questions are original teaching material, not real exam items. Always follow the current official candidate handbook for your exam.</p></details>
       <details><summary>When will OET and PTE prep be ready?</summary><p>They're in development. Join the Telegram group to hear first when they open.</p></details>
@@ -910,6 +913,7 @@ const SITE={
   OSCE_PRICE:"A$199",
   OSCE_PAY_URL:"https://buy.stripe.com/28EcMY8Ce0Xdfhj03G00005",
   OSCE_F2F_PRICE:"A$1,950",
+  OSCE_F2F_PAY_URL:"https://buy.stripe.com/8x2aEQbOq49pgln2bO0000a",   // Stripe payment link for the Face-to-Face Intensive
   // Face-to-face bookings go to these accounts.
   // Phone numbers: country code + number, digits only, no + or spaces (0458 567 621 -> "61458567621").
   BOOKING_TELEGRAM_PHONE:"61458567621",
