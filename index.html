@@ -461,6 +461,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (max-width:1100px){.guide-st{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:900px){.guide-st{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.guide-st{grid-template-columns:1fr}}
+.eng-anchor{scroll-margin-top:84px}
+.eng-pick a{display:grid;grid-template-columns:44px 1fr 22px;gap:14px;align-items:center;padding:14px 0;color:inherit;text-decoration:none}
+.eng-pick a + a{border-top:1px solid rgba(255,255,255,.1)}
+.eng-pick a i{font:800 12px/1 var(--f-mono);font-style:normal;background:color-mix(in srgb,var(--ec) 22%,transparent);color:var(--ec)}
+.eng-pick a > svg{width:20px;height:20px;color:var(--on-ink-dim);transition:transform .25s}
+.eng-pick a:hover > svg{transform:translateY(3px);color:var(--ec)}
 </style>
 </head>
 <body>
@@ -476,8 +482,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <a class="tab" href="#f2f" data-tab="f2f" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Face-to-Face</a>
     <a class="tab" href="#guide" data-tab="guide" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Script Guide</a>
     <a class="tab" href="#nclex" data-tab="nclex" style="--c:var(--coral)"><span class="dot"></span>NCLEX Hero</a>
-    <a class="tab" href="#oet" data-tab="oet" style="--c:var(--violet)"><span class="dot"></span>OET<span class="soon">Soon</span></a>
-    <a class="tab" href="#pte" data-tab="pte" style="--c:var(--amber)"><span class="dot"></span>PTE<span class="soon">Soon</span></a>
+    <a class="tab" href="#english" data-tab="english" style="--c:var(--violet)"><span class="dot"></span>English Prep Exam<span class="soon">Soon</span></a>
     <a class="tab" href="#pricing" data-tab="pricing">Pricing</a>
     <a class="tab" href="#faq" data-tab="faq">FAQ</a>
   </div>
@@ -829,26 +834,29 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   </div></section>
 </section>
 
-<!-- =================================================================== OET -->
-<section class="panel" data-panel="oet" aria-label="OET Prep" hidden>
-  <div class="phead" style="--pc:var(--violet);--pc2:#3B2A7A">
+<!-- =================================================================== ENGLISH PREP (OET + PTE) -->
+<section class="panel" data-panel="english" aria-label="English Prep Exam" hidden>
+  <div class="phead" style="--pc:var(--violet);--pc2:#6B4A08">
     <span class="blob a"></span><span class="blob b"></span>
     <div class="wrap">
       <div class="rise" style="--i:0">
-        <span class="tag">English · Occupational English Test</span>
-        <h1 style="margin-top:16px">OET Prep for nurses</h1>
-        <p class="lede">The Occupational English Test is built for healthcare professionals, and it is one of the English tests the NMBA accepts for registration. We're building OET practice for nurses, using the clinical situations you already know.</p>
+        <span class="tag">English · OET &amp; PTE Academic</span>
+        <h1 style="margin-top:16px">English Prep Exam</h1>
+        <p class="lede">Most internationally qualified nurses need to meet the NMBA English language standard for registration. We're building nurse-focused prep for two of the accepted tests: the OET and PTE Academic.</p>
         <div class="soonbox">
           <div class="build-l"><span>IN DEVELOPMENT</span><span>Coming soon</span></div>
-          <div class="build"><i style="--w:45%"></i></div>
+          <div class="build"><i style="--w:40%"></i></div>
           <div class="ctas" style="margin-top:10px"><span class="btn btn-soon" style="color:var(--violet)" aria-disabled="true">Link coming soon</span><a class="btn btn-ghost-ink" data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Hear first on Telegram</a></div>
         </div>
       </div>
-      <div class="big-letter rise" style="--i:1" aria-hidden="true">OET</div>
+      <div class="facts eng-pick rise" style="--i:1">
+        <a href="#oet" style="--ec:var(--violet)"><i>OET</i><p style="margin:0"><b>OET for nurses</b><span>Occupational English Test, Nursing version · coming soon</span></p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></a>
+        <a href="#pte" style="--ec:var(--amber)"><i>PTE</i><p style="margin:0"><b>PTE Academic</b><span>Computer-based English test · coming soon</span></p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></a>
+      </div>
     </div>
   </div>
-  <section class="section"><div class="wrap">
-    <div class="head"><div class="eyebrow" style="color:var(--violet-text)">The four sub-tests</div><h2>What the OET tests</h2><p>Nurses sit the Nursing version, so the tasks come from real healthcare settings.</p></div>
+  <section class="section eng-anchor" id="english-oet"><div class="wrap">
+    <div class="head"><div class="eyebrow" style="color:var(--violet-text)">OET · Occupational English Test · The four sub-tests</div><h2>What the OET tests</h2><p>Nurses sit the Nursing version, so the tasks come from real healthcare settings.</p></div>
     <div class="subtests" style="--sc:var(--violet-text)">
       <div class="sub rise" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg><b>Listening</b><span>Consultations and healthcare talks.</span></div>
       <div class="sub rise" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg><b>Reading</b><span>Healthcare texts, from short notices to articles.</span></div>
@@ -861,28 +869,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="score-wrap"><table class="score"><thead><tr><th>Listening</th><th>Reading</th><th>Writing</th><th>Speaking</th></tr></thead><tbody><tr><td class="n">350</td><td class="n">360</td><td class="n">350</td><td class="n">360</td></tr></tbody></table></div>
     <p class="note">Tests taken on or before 22 April 2026 use the earlier minimums. Always check the current rules on <a href="https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx" target="_blank" rel="noopener">Ahpra's accepted English tests page</a> before you book.</p>
   </div></section>
-</section>
-
-<!-- =================================================================== PTE -->
-<section class="panel" data-panel="pte" aria-label="PTE Prep" hidden>
-  <div class="phead" style="--pc:var(--amber);--pc2:#6B4A08">
-    <span class="blob a"></span><span class="blob b"></span>
-    <div class="wrap">
-      <div class="rise" style="--i:0">
-        <span class="tag">English · PTE Academic</span>
-        <h1 style="margin-top:16px">PTE Prep for nurses</h1>
-        <p class="lede">PTE Academic is a computer-based English test taken at a test centre, and the NMBA accepts it for registration. We're building PTE practice designed for nurses working toward the English standard.</p>
-        <div class="soonbox">
-          <div class="build-l"><span>IN DEVELOPMENT</span><span>Coming soon</span></div>
-          <div class="build"><i style="--w:30%"></i></div>
-          <div class="ctas" style="margin-top:10px"><span class="btn btn-soon" style="color:var(--amber)" aria-disabled="true">Link coming soon</span><a class="btn btn-ghost-ink" data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Hear first on Telegram</a></div>
-        </div>
-      </div>
-      <div class="big-letter rise" style="--i:1" aria-hidden="true">PTE</div>
-    </div>
-  </div>
-  <section class="section"><div class="wrap">
-    <div class="head"><div class="eyebrow" style="color:var(--amber-text)">The four skills</div><h2>What PTE Academic tests</h2><p>Each skill gets its own score, as well as an overall score.</p></div>
+  <section class="section eng-anchor" id="english-pte" style="border-top:1px solid var(--line)"><div class="wrap">
+    <div class="head"><div class="eyebrow" style="color:var(--amber-text)">PTE Academic · The four skills</div><h2>What PTE Academic tests</h2><p>Each skill gets its own score, as well as an overall score.</p></div>
     <div class="subtests" style="--sc:var(--amber-text)">
       <div class="sub rise" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg><b>Listening</b><span>Recorded lectures and conversations.</span></div>
       <div class="sub rise" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg><b>Reading</b><span>Academic texts on screen.</span></div>
@@ -991,7 +979,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <footer class="foot"><div class="wrap">
   <a class="brand" href="#home"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#062A2A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-5 4 10 2-5h8"/></svg></span>NextGen Nurses</a>
-  <nav aria-label="Footer"><a href="#osce">AHPRA RN OSCE Online</a><a href="#f2f">AHPRA RN OSCE Face-to-Face</a><a href="#guide">AHPRA RN OSCE Script Guide</a><a href="#nclex">NCLEX Hero</a><a href="#oet">OET</a><a href="#pte">PTE</a><a href="#pricing">Pricing</a><a href="#faq">FAQ &amp; support</a></nav>
+  <nav aria-label="Footer"><a href="#osce">AHPRA RN OSCE Online</a><a href="#f2f">AHPRA RN OSCE Face-to-Face</a><a href="#guide">AHPRA RN OSCE Script Guide</a><a href="#nclex">NCLEX Hero</a><a href="#english">English Prep Exam</a><a href="#pricing">Pricing</a><a href="#faq">FAQ &amp; support</a></nav>
   <p>Independent exam preparation for internationally qualified nurses. Not affiliated with or endorsed by Ahpra, the Nursing and Midwifery Board of Australia, the National Council of State Boards of Nursing, OET or Pearson. NCLEX® and NCLEX-RN® are registered trademarks of the National Council of State Boards of Nursing, Inc. OET is a trademark of Cambridge Boxhill Language Assessment. PTE Academic is a trademark of Pearson.</p>
   <p>© <span id="yr">2026</span> NextGen Nurses · TikTok <a data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">@nexgennurses_</a> · <a data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Telegram</a> · <a data-href="WHATSAPP_URL" href="#" target="_blank" rel="noopener">WhatsApp support</a></p>
 </div></footer>
@@ -1036,7 +1024,7 @@ document.querySelectorAll("[data-cfg-host]").forEach(el=>{const v=SITE[el.datase
 document.getElementById("yr").textContent=new Date().getFullYear();
 
 /* ---------- tabs ---------- */
-const TABS=["home","osce","f2f","guide","nclex","oet","pte","pricing","faq"];
+const TABS=["home","osce","f2f","guide","nclex","english","pricing","faq"];
 const tabEls=[...document.querySelectorAll(".tab")], ind=document.getElementById("tabInd"), tabsBox=document.getElementById("tabs");
 function moveInd(t){
   if(!t)return;
@@ -1054,13 +1042,14 @@ function show(name,fromNav){
   const cur=tabEls.find(t=>t.dataset.tab===name);moveInd(cur);
   if(cur){const l=cur.offsetLeft-tabsBox.clientWidth/2+cur.offsetWidth/2;tabsBox.scrollTo({left:l,behavior:reduce?"auto":"smooth"})}
   if(fromNav)window.scrollTo({top:0,behavior:"auto"});
-  const TT={home:"",osce:"AHPRA RN OSCE Online Module",f2f:"AHPRA RN OSCE Face-to-Face Intensive",guide:"AHPRA RN OSCE Script Guide",nclex:"NCLEX Hero",oet:"OET Prep",pte:"PTE Prep",pricing:"Pricing",faq:"FAQ & support"};
+  const TT={home:"",osce:"AHPRA RN OSCE Online Module",f2f:"AHPRA RN OSCE Face-to-Face Intensive",guide:"AHPRA RN OSCE Script Guide",nclex:"NCLEX Hero",english:"English Prep Exam",pricing:"Pricing",faq:"FAQ & support"};
   document.title=TT[name]?TT[name]+" · NextGen Nurses":"NextGen Nurses";
   if(name==="home")countUp();
 }
 function route(fromNav){
   const h=(location.hash||"").slice(1);
   if(h==="f2f-book"){show("f2f",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
+  if(h==="oet"||h==="pte"){show("english",false);requestAnimationFrame(()=>document.getElementById("english-"+h).scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
   if(h==="osce-guide"||h==="pricing-guide"){show(h==="osce-guide"?"osce":"pricing",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}));return}
   if(h==="nclex-plans"){show("nclex",false);requestAnimationFrame(()=>document.getElementById("nclex-plans").scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
   show(h||"home",fromNav);
