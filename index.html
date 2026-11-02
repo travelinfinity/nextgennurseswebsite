@@ -1016,6 +1016,7 @@ function show(name,fromNav){
 function route(fromNav){
   const h=(location.hash||"").slice(1);
   if(h==="f2f-book"){show("f2f",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
+  if(h==="osce-guide"||h==="pricing-guide"){show(h==="osce-guide"?"osce":"pricing",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"}));return}
   if(h==="nclex-plans"){show("nclex",false);requestAnimationFrame(()=>document.getElementById("nclex-plans").scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
   show(h||"home",fromNav);
 }
