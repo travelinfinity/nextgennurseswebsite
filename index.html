@@ -450,8 +450,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .guide-buy{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;margin-top:4px}
 .guide-buy .big{font:800 44px/1 var(--f-display)}
 .guide-buy .per{display:block;color:var(--muted);font-size:13.5px;margin-top:4px}
+.guide{scroll-margin-top:96px}
 .prices-addon{margin-top:22px}
 @media (max-width:760px){.guide{grid-template-columns:1fr}.guide-img{min-height:220px}.guide ul{grid-template-columns:1fr}.guide-body{padding:22px}.guide-buy .btn{width:100%}}
+.gphoto{position:relative;margin:0;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);aspect-ratio:16/10;width:100%;max-width:560px;justify-self:center}
+.gphoto img{width:100%;height:100%;object-fit:cover;display:block}
+.gphoto .chip{position:absolute;top:14px;left:14px;background:rgba(6,18,34,.82);color:var(--mint);border:1px solid rgba(63,216,194,.45);border-radius:999px;padding:7px 11px;font:700 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.guide-st .sn{font:700 12px/1 var(--f-mono);color:var(--teal);letter-spacing:.06em}
+.guide-st{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:1100px){.guide-st{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){.guide-st{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.guide-st{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -465,6 +474,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <a class="tab" href="#home" data-tab="home">Home</a>
     <a class="tab" href="#osce" data-tab="osce" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Online</a>
     <a class="tab" href="#f2f" data-tab="f2f" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Face-to-Face</a>
+    <a class="tab" href="#guide" data-tab="guide" style="--c:var(--mint)"><span class="dot"></span>AHPRA RN OSCE Script Guide</a>
     <a class="tab" href="#nclex" data-tab="nclex" style="--c:var(--coral)"><span class="dot"></span>NCLEX Hero</a>
     <a class="tab" href="#oet" data-tab="oet" style="--c:var(--violet)"><span class="dot"></span>OET<span class="soon">Soon</span></a>
     <a class="tab" href="#pte" data-tab="pte" style="--c:var(--amber)"><span class="dot"></span>PTE<span class="soon">Soon</span></a>
@@ -683,6 +693,41 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <details><summary>Why must the intensive be 2–3 weeks before my exam?</summary><p>It leaves enough time to fix the feedback from your trainer while the hands-on practice is still fresh, without leaving it so long that you lose the rhythm of the stations.</p></details>
       <details><summary>Why are face-to-face places limited?</summary><p>This is an intensive prep that needs close observation by the OSCE trainer. Keeping each intake to 8–10 students means everyone gets hands-on turns and individual feedback.</p></details>
       <details><summary>How do I pay for the face-to-face intensive?</summary><p>Send us your full name and exam date using the form above. We'll confirm a place in the right intake. Then pay securely with the <b>Pay now</b> button (Stripe). Your spot is held once payment is received.</p></details>
+    </div>
+  </div></section>
+</section>
+
+<!-- =================================================================== OSCE SCRIPT GUIDE -->
+<section class="panel" data-panel="guide" aria-label="AHPRA RN OSCE Script Guide" hidden>
+  <div class="phead" style="--pc:var(--mint)">
+    <span class="blob a"></span><span class="blob b"></span>
+    <div class="wrap">
+      <div class="rise" style="--i:0">
+        <span class="tag">Australia · Ahpra RN OSCE · PDF</span>
+        <h1 style="margin-top:16px">AHPRA RN OSCE Script Guide</h1>
+        <p class="lede">A 66-page printable reviewer for all 10 core OSCE stations. Step-by-step checklists, the mistakes that cost marks, and word-for-word scripts for what to say to the patient and the examiner.</p>
+        <div class="price-row">
+          <div class="price"><b data-cfg="OSCE_GUIDE_PRICE">A$15</b><span>one-time · instant PDF download</span></div>
+          <div class="ctas"><a class="btn btn-mint" data-pay="OSCE_GUIDE_PAY_URL" href="#" target="_blank" rel="noopener">Buy the PDF guide</a><a class="btn btn-ghost-ink" href="#osce">See the Online Module</a></div>
+        </div>
+      </div>
+      <figure class="gphoto rise" style="--i:1"><img src="/assets/osce-guide-photo.jpg" alt="OSCE practice: a candidate performing basic life support while an examiner observes in a simulation lab" width="960" height="526"><span class="chip">PDF · 66 pages · 10 stations</span></figure>
+    </div>
+  </div>
+  <section class="section"><div class="wrap">
+    <div class="head"><div class="eyebrow">What's inside</div><h2>Every core station, from your first words to your closing check</h2><p>Each station has a goal, a checklist, common mistakes and a script you can practise out loud.</p></div>
+    <div class="fgrid guide-st" style="--fc:var(--teal)"><div class="feat rise" style="--i:0"><span class="sn">S1</span><h3>Vital signs &amp; pain</h3><p>Respiratory rate to temperature, interpreting results and escalating deterioration.</p></div><div class="feat rise" style="--i:1"><span class="sn">S2</span><h3>Basic life support</h3><p>DRSABCD, high-quality compressions and safe AED use.</p></div><div class="feat rise" style="--i:2"><span class="sn">S3</span><h3>Blood transfusion</h3><p>Two-clinician checks, and STOP–ASSESS–ESCALATE when a reaction starts.</p></div><div class="feat rise" style="--i:0"><span class="sn">S4</span><h3>Medication administration</h3><p>Rights, three checks, what to assess first and when to withhold.</p></div><div class="feat rise" style="--i:1"><span class="sn">S5</span><h3>IV fluids</h3><p>VIP score, pump calculations and spotting fluid overload.</p></div><div class="feat rise" style="--i:2"><span class="sn">S6</span><h3>ISBAR handover</h3><p>Identify, Situation, Background, Assessment and a clear Recommendation.</p></div><div class="feat rise" style="--i:0"><span class="sn">S7</span><h3>Pain assessment</h3><p>PQRST, red flags, analgesia and the reassessment examiners look for.</p></div><div class="feat rise" style="--i:1"><span class="sn">S8</span><h3>A–G assessment</h3><p>Airway through Glucose for the acutely unwell patient.</p></div><div class="feat rise" style="--i:2"><span class="sn">S9</span><h3>Risk assessment</h3><p>Falls, pressure injury, delirium and self-harm risk.</p></div><div class="feat rise" style="--i:0"><span class="sn">S10</span><h3>Wound care &amp; ANTT</h3><p>WOUND assessment, key-part protection and escalation signs.</p></div></div>
+    <div class="fgrid" style="--fc:var(--teal);margin-top:16px">
+      <div class="feat rise" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><h3>Universal scripts</h3><p>Opening, closing and emergency scripts you can adapt to almost every station.</p></div>
+      <div class="feat rise" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><h3>Top 12 mark losers</h3><p>Audit yourself against the reasons candidates most often lose marks.</p></div>
+      <div class="feat rise" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><h3>Print or read on your phone</h3><p>Study offline, write on it, and keep it for your exam day revision.</p></div>
+    </div>
+  </div></section>
+  <section class="section" style="padding-top:0"><div class="wrap">
+    <div class="faq">
+      <details><summary>How do I get the guide after I pay?</summary><p>As soon as your payment goes through, checkout takes you straight to your download page. Save the PDF to your phone or computer right away. If the page doesn't open, message us on WhatsApp support with your Stripe receipt and we'll send the guide to you.</p></details>
+      <details><summary>Is this the same as the Online Module?</summary><p>No. The Script Guide is a printable PDF for reading and revision. The AHPRA RN OSCE Online Module (A$199) is the interactive app with timed stations, rubrics, demo videos and a full mock circuit. They work well together.</p></details>
+      <details><summary>Is this the official Ahpra OSCE?</summary><p>No. This is an independent study resource with original teaching material, not real exam items. Always follow the current NMBA candidate handbook.</p></details>
     </div>
   </div></section>
 </section>
@@ -946,7 +991,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 <footer class="foot"><div class="wrap">
   <a class="brand" href="#home"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#062A2A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-5 4 10 2-5h8"/></svg></span>NextGen Nurses</a>
-  <nav aria-label="Footer"><a href="#osce">AHPRA RN OSCE Online</a><a href="#f2f">AHPRA RN OSCE Face-to-Face</a><a href="#nclex">NCLEX Hero</a><a href="#oet">OET</a><a href="#pte">PTE</a><a href="#pricing">Pricing</a><a href="#faq">FAQ &amp; support</a></nav>
+  <nav aria-label="Footer"><a href="#osce">AHPRA RN OSCE Online</a><a href="#f2f">AHPRA RN OSCE Face-to-Face</a><a href="#guide">AHPRA RN OSCE Script Guide</a><a href="#nclex">NCLEX Hero</a><a href="#oet">OET</a><a href="#pte">PTE</a><a href="#pricing">Pricing</a><a href="#faq">FAQ &amp; support</a></nav>
   <p>Independent exam preparation for internationally qualified nurses. Not affiliated with or endorsed by Ahpra, the Nursing and Midwifery Board of Australia, the National Council of State Boards of Nursing, OET or Pearson. NCLEX® and NCLEX-RN® are registered trademarks of the National Council of State Boards of Nursing, Inc. OET is a trademark of Cambridge Boxhill Language Assessment. PTE Academic is a trademark of Pearson.</p>
   <p>© <span id="yr">2026</span> NextGen Nurses · TikTok <a data-href="TIKTOK_URL" href="https://www.tiktok.com/@nexgennurses_" target="_blank" rel="noopener">@nexgennurses_</a> · <a data-href="TELEGRAM_URL" href="#" target="_blank" rel="noopener">Telegram</a> · <a data-href="WHATSAPP_URL" href="#" target="_blank" rel="noopener">WhatsApp support</a></p>
 </div></footer>
@@ -991,7 +1036,7 @@ document.querySelectorAll("[data-cfg-host]").forEach(el=>{const v=SITE[el.datase
 document.getElementById("yr").textContent=new Date().getFullYear();
 
 /* ---------- tabs ---------- */
-const TABS=["home","osce","f2f","nclex","oet","pte","pricing","faq"];
+const TABS=["home","osce","f2f","guide","nclex","oet","pte","pricing","faq"];
 const tabEls=[...document.querySelectorAll(".tab")], ind=document.getElementById("tabInd"), tabsBox=document.getElementById("tabs");
 function moveInd(t){
   if(!t)return;
@@ -1009,14 +1054,14 @@ function show(name,fromNav){
   const cur=tabEls.find(t=>t.dataset.tab===name);moveInd(cur);
   if(cur){const l=cur.offsetLeft-tabsBox.clientWidth/2+cur.offsetWidth/2;tabsBox.scrollTo({left:l,behavior:reduce?"auto":"smooth"})}
   if(fromNav)window.scrollTo({top:0,behavior:"auto"});
-  const TT={home:"",osce:"AHPRA RN OSCE Online Module",f2f:"AHPRA RN OSCE Face-to-Face Intensive",nclex:"NCLEX Hero",oet:"OET Prep",pte:"PTE Prep",pricing:"Pricing",faq:"FAQ & support"};
+  const TT={home:"",osce:"AHPRA RN OSCE Online Module",f2f:"AHPRA RN OSCE Face-to-Face Intensive",guide:"AHPRA RN OSCE Script Guide",nclex:"NCLEX Hero",oet:"OET Prep",pte:"PTE Prep",pricing:"Pricing",faq:"FAQ & support"};
   document.title=TT[name]?TT[name]+" · NextGen Nurses":"NextGen Nurses";
   if(name==="home")countUp();
 }
 function route(fromNav){
   const h=(location.hash||"").slice(1);
   if(h==="f2f-book"){show("f2f",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
-  if(h==="osce-guide"||h==="pricing-guide"){show(h==="osce-guide"?"osce":"pricing",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"}));return}
+  if(h==="osce-guide"||h==="pricing-guide"){show(h==="osce-guide"?"osce":"pricing",false);requestAnimationFrame(()=>document.getElementById(h).scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}));return}
   if(h==="nclex-plans"){show("nclex",false);requestAnimationFrame(()=>document.getElementById("nclex-plans").scrollIntoView({behavior:reduce?"auto":"smooth"}));return}
   show(h||"home",fromNav);
 }
