@@ -392,6 +392,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .big-letter{font:800 clamp(120px,20vw,220px)/.8 var(--f-display);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--pc);opacity:.9;justify-self:center;animation:float 6s ease-in-out infinite}
 .subtests{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 @media (max-width:760px){.subtests{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.dls{grid-template-columns:1fr}}
+.dl{background:var(--surface);border:1.5px solid var(--line);border-top:6px solid var(--amber);border-radius:20px;padding:24px;display:grid;gap:12px;align-content:start}
+.dl .free{justify-self:start;font:700 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber-text);border:1.5px solid currentColor;border-radius:999px;padding:6px 10px}
+.dl p{color:var(--muted)}
+.dl .btn{justify-self:start}
 .sub{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:6px;transition:transform .3s,border-color .3s}
 .sub:hover{transform:translateY(-4px);border-color:var(--sc)}
 .sub b{font:800 19px/1.2 var(--f-display)}
@@ -882,6 +888,23 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="head"><div class="eyebrow" style="color:var(--amber-text)">NMBA minimum scores</div><h2>The scores you need for registration</h2><p>For PTE Academic tests taken on or after 23 April 2026.</p></div>
     <div class="score-wrap"><table class="score"><thead><tr><th>Overall</th><th>Listening</th><th>Reading</th><th>Writing</th><th>Speaking</th></tr></thead><tbody><tr><td class="n">63</td><td class="n">58</td><td class="n">59</td><td class="n">60</td><td class="n">76</td></tr></tbody></table></div>
     <p class="note">Tests taken on or before 22 April 2026 use the earlier minimums. Always check the current rules on <a href="https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx" target="_blank" rel="noopener">Ahpra's accepted English tests page</a> before you book.</p>
+  </div></section>
+  <section class="section" id="pte-downloads" style="padding-top:0"><div class="wrap">
+    <div class="head"><div class="eyebrow" style="color:var(--amber-text)">Free PTE resources</div><h2>Free PTE review downloads</h2><p>Two printable PDFs to start your PTE Academic preparation. No sign-up needed.</p></div>
+    <div class="dls">
+      <div class="dl rise" style="--i:0">
+        <span class="free">Free PDF</span>
+        <h3>PTE Answer Short Questions Review</h3>
+        <p>130 practice questions with answers, grouped by topic, to build quick general vocabulary for the Answer Short Question task.</p>
+        <a class="btn btn-amber" href="/downloads/NextGen-Nurses-PTE-Short-Answer-Review.pdf" download>Download PDF</a>
+      </div>
+      <div class="dl rise" style="--i:1">
+        <span class="free">Free PDF</span>
+        <h3>PTE Tips and Strategies</h3>
+        <p>Practical tips and timing for every Speaking, Writing, Reading and Listening task in PTE Academic.</p>
+        <a class="btn btn-amber" href="/downloads/NextGen-Nurses-PTE-Tips-and-Strategies.pdf" download>Download PDF</a>
+      </div>
+    </div>
   </div></section>
 </section>
 
