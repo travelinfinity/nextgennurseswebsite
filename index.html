@@ -395,6 +395,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .dls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 @media (max-width:760px){.dls{grid-template-columns:1fr}}
 .dl{background:var(--surface);border:1.5px solid var(--line);border-top:6px solid var(--amber);border-radius:20px;padding:24px;display:grid;gap:12px;align-content:start}
+.dl.oet{border-top-color:var(--violet)}
+.dl.oet .free{color:var(--violet-text)}
 .dl .free{justify-self:start;font:700 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber-text);border:1.5px solid currentColor;border-radius:999px;padding:6px 10px}
 .dl p{color:var(--muted)}
 .dl .btn{justify-self:start}
@@ -874,6 +876,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <div class="head"><div class="eyebrow" style="color:var(--violet-text)">NMBA minimum scores</div><h2>The scores you need for registration</h2><p>For OET tests taken on or after 23 April 2026.</p></div>
     <div class="score-wrap"><table class="score"><thead><tr><th>Listening</th><th>Reading</th><th>Writing</th><th>Speaking</th></tr></thead><tbody><tr><td class="n">350</td><td class="n">360</td><td class="n">350</td><td class="n">360</td></tr></tbody></table></div>
     <p class="note">Tests taken on or before 22 April 2026 use the earlier minimums. Always check the current rules on <a href="https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx" target="_blank" rel="noopener">Ahpra's accepted English tests page</a> before you book.</p>
+  </div></section>
+  <section class="section" id="oet-downloads" style="padding-top:0"><div class="wrap">
+    <div class="head"><div class="eyebrow" style="color:var(--violet-text)">Free OET resource</div><h2>Free OET review download</h2><p>A printable PDF to start your OET Nursing preparation. No sign-up needed.</p></div>
+    <div class="dls">
+      <div class="dl oet rise" style="--i:0">
+        <span class="free">Free PDF</span>
+        <h3>OET Nursing Review and Test-Taking Strategies</h3>
+        <p>Format, scores and strategies for all four sub-tests, with a referral letter template, role-play phrases, a 6-week study plan and a test-day checklist.</p>
+        <a class="btn btn-violet" href="/downloads/NextGen-Nurses-OET-Nursing-Review-and-Strategies.pdf" download>Download PDF</a>
+      </div>
+    </div>
   </div></section>
   <section class="section eng-anchor" id="english-pte" style="border-top:1px solid var(--line)"><div class="wrap">
     <div class="head"><div class="eyebrow" style="color:var(--amber-text)">PTE Academic · The four skills</div><h2>What PTE Academic tests</h2><p>Each skill gets its own score, as well as an overall score.</p></div>
