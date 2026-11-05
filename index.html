@@ -400,6 +400,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .dl .free{justify-self:start;font:700 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--amber-text);border:1.5px solid currentColor;border-radius:999px;padding:6px 10px}
 .dl p{color:var(--muted)}
 .dl .btn{justify-self:start}
+.dl-buy{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-top:4px}
+.dl-buy .big{font:800 34px/1 var(--f-display)}
+.dl-buy .per{display:block;color:var(--muted);font-size:13.5px;margin-top:4px}
+.dl-bundle{margin-top:16px;background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:20px 24px}
+@media (max-width:560px){.dl-buy .btn{width:100%}}
 .sub{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:6px;transition:transform .3s,border-color .3s}
 .sub:hover{transform:translateY(-4px);border-color:var(--sc)}
 .sub b{font:800 19px/1.2 var(--f-display)}
@@ -878,13 +883,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="note">Tests taken on or before 22 April 2026 use the earlier minimums. Always check the current rules on <a href="https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx" target="_blank" rel="noopener">Ahpra's accepted English tests page</a> before you book.</p>
   </div></section>
   <section class="section" id="oet-downloads" style="padding-top:0"><div class="wrap">
-    <div class="head"><div class="eyebrow" style="color:var(--violet-text)">Free OET resource</div><h2>Free OET review download</h2><p>A printable PDF to start your OET Nursing preparation. No sign-up needed.</p></div>
+    <div class="head"><div class="eyebrow" style="color:var(--violet-text)">OET review guide</div><h2>OET Nursing review PDF</h2><p>A printable PDF to start your OET Nursing preparation. Pay once with Stripe and download it straight away.</p></div>
     <div class="dls">
       <div class="dl oet rise" style="--i:0">
-        <span class="free">Free PDF</span>
+        <span class="free">PDF · instant download</span>
         <h3>OET Nursing Review and Test-Taking Strategies</h3>
         <p>Format, scores and strategies for all four sub-tests, with a referral letter template, role-play phrases, a 6-week study plan and a test-day checklist.</p>
-        <a class="btn btn-violet" href="/downloads/NextGen-Nurses-OET-Nursing-Review-and-Strategies.pdf" download>Download PDF</a>
+        <div class="dl-buy"><div><div class="big" data-cfg="OET_GUIDE_PRICE">A$16.50</div><span class="per">including GST · one-time</span></div><a class="btn btn-violet" data-pay="OET_GUIDE_PAY_URL" href="#" target="_blank" rel="noopener">Buy the OET PDF</a></div>
       </div>
     </div>
   </div></section>
@@ -903,21 +908,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="note">Tests taken on or before 22 April 2026 use the earlier minimums. Always check the current rules on <a href="https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx" target="_blank" rel="noopener">Ahpra's accepted English tests page</a> before you book.</p>
   </div></section>
   <section class="section" id="pte-downloads" style="padding-top:0"><div class="wrap">
-    <div class="head"><div class="eyebrow" style="color:var(--amber-text)">Free PTE resources</div><h2>Free PTE review downloads</h2><p>Two printable PDFs to start your PTE Academic preparation. No sign-up needed.</p></div>
+    <div class="head"><div class="eyebrow" style="color:var(--amber-text)">PTE review bundle</div><h2>PTE Academic review PDFs</h2><p>Two printable PDFs to start your PTE Academic preparation, sold together as one bundle. Pay once with Stripe and download both straight away.</p></div>
     <div class="dls">
       <div class="dl rise" style="--i:0">
-        <span class="free">Free PDF</span>
+        <span class="free">In the PTE bundle</span>
         <h3>PTE Answer Short Questions Review</h3>
         <p>130 practice questions with answers, grouped by topic, to build quick general vocabulary for the Answer Short Question task.</p>
-        <a class="btn btn-amber" href="/downloads/NextGen-Nurses-PTE-Short-Answer-Review.pdf" download>Download PDF</a>
       </div>
       <div class="dl rise" style="--i:1">
-        <span class="free">Free PDF</span>
+        <span class="free">In the PTE bundle</span>
         <h3>PTE Tips and Strategies</h3>
         <p>Practical tips and timing for every Speaking, Writing, Reading and Listening task in PTE Academic.</p>
-        <a class="btn btn-amber" href="/downloads/NextGen-Nurses-PTE-Tips-and-Strategies.pdf" download>Download PDF</a>
       </div>
     </div>
+    <div class="dl-bundle dl-buy"><div><div class="big" data-cfg="PTE_GUIDE_PRICE">A$16.50</div><span class="per">both PDFs · including GST · one-time</span></div><a class="btn btn-amber" data-pay="PTE_GUIDE_PAY_URL" href="#" target="_blank" rel="noopener">Buy the PTE bundle</a></div>
   </div></section>
 </section>
 
@@ -1030,7 +1034,11 @@ const SITE={
   OSCE_PRICE:"A$218.90",
   OSCE_PAY_URL:"https://buy.stripe.com/28EcMY8Ce0Xdfhj03G00005",
   OSCE_GUIDE_PRICE:"A$16.50",
-  OSCE_GUIDE_PAY_URL:"https://buy.stripe.com/28E6oA9GieO33yB5o00000b",   // Stripe payment link for the 10-Station Master Guide (PDF); after payment, redirect buyers to https://www.nextgennursestraining.com/g/yYVpyhPqWIDk829Q1gxn/
+  OSCE_GUIDE_PAY_URL:"https://buy.stripe.com/28E6oA9GieO33yB5o00000b",   // Stripe payment link for the 10-Station Master Guide (PDF)
+  OET_GUIDE_PRICE:"A$16.50",
+  OET_GUIDE_PAY_URL:"",   // Stripe payment link for the OET PDF
+  PTE_GUIDE_PRICE:"A$16.50",
+  PTE_GUIDE_PAY_URL:"",   // Stripe payment link for the PTE bundle (2 PDFs)
   OSCE_F2F_PRICE:"A$1,950",
   OSCE_F2F_PAY_URL:"https://buy.stripe.com/8x2aEQbOq49pgln2bO0000a",   // Stripe payment link for the Face-to-Face Intensive
   // Face-to-face bookings go to these accounts.
