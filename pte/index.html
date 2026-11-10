@@ -257,7 +257,7 @@ details.q p{margin-top:10px;color:var(--muted)}
     </ul>
   </section>
   <section class="buy" id="buy">
-    <div><div class="big" id="price">A$33.00</div><span class="muted small">including GST · one-time payment · no subscription</span></div>
+    <div><div class="big" id="price">A$44.00</div><span class="muted small">including GST · one-time payment · no subscription</span></div>
     <a class="btn btn-amber" id="buyBtn" href="#" target="_blank" rel="noopener">Buy the PTE practice app</a>
   </section>
   <section style="display:grid;gap:10px">
@@ -274,9 +274,10 @@ details.q p{margin-top:10px;color:var(--muted)}
   <p><a href="/">nextgennursestraining.com</a> · <a href="/#pte">PTE review PDFs</a></p>
 </div></footer>
 <script>
-/* Paste the Stripe payment link for the PTE practice app between the quotes to open sales. */
+/* Paste the Stripe payment link for the PTE practice app between the quotes to open sales.
+   Link (waiting for its after-payment redirect to be set): https://buy.stripe.com/eVq5kw6u60XdfhjaIk0000i */
 var PTE_APP_PAY_URL = "";
-var PTE_APP_PRICE = "A$33.00";
+var PTE_APP_PRICE = "A$44.00";
 (function(){
   var b=document.getElementById("buyBtn");document.getElementById("price").textContent=PTE_APP_PRICE;
   if(PTE_APP_PAY_URL){b.href=PTE_APP_PAY_URL;b.addEventListener("click",function(){try{window.va&&window.va("event",{name:"Checkout click",data:{product:"PTE_APP_PAY_URL"}})}catch(e){}});}
