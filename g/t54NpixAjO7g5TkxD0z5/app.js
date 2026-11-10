@@ -593,9 +593,9 @@
     var targets = [["Overall", 63], ["Listening", 58], ["Reading", 59], ["Writing", 60], ["Speaking", 76]];
     app.textContent = "";
     app.appendChild(h("header", { class: "hero" }, h("div", { class: "wrap" },
-      h("div", { class: "eyebrow" }, "PTE Academic · free practice"),
+      h("div", { class: "eyebrow" }, "PTE Academic · member practice"),
       h("h1", null, "Practise every PTE task ", h("em", null, "against the clock.")),
-      h("p", null, "All " + D.tasks.length + " question types across Speaking, Writing, Reading and Listening, with exam timings, instant marking and model answers. No sign-up needed."),
+      h("p", null, "All " + D.tasks.length + " question types across Speaking, Writing, Reading and Listening, with exam timings, instant marking and model answers."),
       h("div", { class: "targets", role: "group", "aria-label": "NMBA minimum PTE Academic scores" }, targets.map(function (t) { return h("div", null, h("b", null, t[1]), h("span", null, t[0])); })),
       h("p", { class: "note" }, "NMBA minimum scores for tests taken on or after 23 April 2026. Always confirm on ",
         h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra's accepted English tests page"), " before you book."))));
