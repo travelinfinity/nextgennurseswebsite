@@ -582,6 +582,38 @@
     });
   }
 
+  /* ---------- estimated scores (a guide only, not official PTE scores) ---------- */
+  // Like the real test, many items count towards two skills.
+  var CONTRIB = { ra: ["speaking", "reading"], rs: ["speaking", "listening"], di: ["speaking"], rl: ["speaking", "listening"], asq: ["speaking", "listening"], rts: ["speaking"], sgd: ["speaking", "listening"],
+    swt: ["writing", "reading"], we: ["writing"], rwfib: ["reading", "writing"], rmcm: ["reading"], ro: ["reading"], rfib: ["reading"], rmcs: ["reading"],
+    sst: ["listening", "writing"], lmcm: ["listening"], lfib: ["listening", "writing"], hcs: ["listening", "reading"], lmcs: ["listening"], smw: ["listening"], hiw: ["listening", "reading"], wfd: ["listening", "writing"] };
+  var TARGET = { overall: 63, listening: 58, reading: 59, writing: 60, speaking: 76 };
+  function estimate(seq) {
+    var by = {}, out = { skills: {}, overall: null, marked: 0, total: seq.length };
+    D.skills.forEach(function (sk) { by[sk.id] = { n: 0, sum: 0, total: 0 }; });
+    seq.forEach(function (s) {
+      var v = (store.p[s.task.id] || {})[s.idx]; if (v != null) out.marked++;
+      (CONTRIB[s.task.id] || [s.task.skill]).forEach(function (sk) { by[sk].total++; if (v != null) { by[sk].n++; by[sk].sum += v; } });
+    });
+    var all = [];
+    D.skills.forEach(function (sk) {
+      var b = by[sk.id], sc = b.n ? Math.round(10 + 80 * (b.sum / b.n)) : null;
+      out.skills[sk.id] = { score: sc, n: b.n, total: b.total }; if (sc != null) all.push(sc);
+    });
+    if (all.length === D.skills.length) out.overall = Math.round(all.reduce(function (a, b) { return a + b; }, 0) / all.length);
+    return out;
+  }
+  function scoreTable(e) {
+    function row(name, sc, target, extra) {
+      var met = sc == null ? "–" : sc >= target ? "✓ Met" : "✗ " + (target - sc) + " below";
+      return h("tr", null, h("td", null, name), h("td", null, h("b", null, sc == null ? "–" : sc)), h("td", null, target), h("td", { class: sc == null ? "" : sc >= target ? "xmet" : "xmiss" }, met), h("td", null, extra));
+    }
+    return h("table", { class: "xtable" },
+      h("thead", null, h("tr", null, h("th", null, "Skill"), h("th", null, "Estimated score"), h("th", null, "NMBA target"), h("th", null, "Result"), h("th", null, "Items marked"))),
+      h("tbody", null, row("Overall", e.overall, TARGET.overall, e.marked + " of " + e.total),
+        D.skills.map(function (sk) { var x = e.skills[sk.id]; return row(sk.name, x.score, TARGET[sk.id], x.n + " of " + x.total); })));
+  }
+
   /* ---------- full practice tests ---------- */
   function runSet(k) {
     var seq = setSeq(k), st = store.sets[k] || { pos: 0 }, results = [];
@@ -609,11 +641,8 @@
       st.done = true; persist(); releaseMic(); track("PTE set finished", { set: k });
       var table = h("div");
       function drawTable() {
-        var by = {};
-        seq.forEach(function (s) { var v = (store.p[s.task.id] || {})[s.idx], sk = s.task.skill; by[sk] = by[sk] || { n: 0, sum: 0, total: 0 }; by[sk].total++; if (v != null) { by[sk].n++; by[sk].sum += v; } });
         table.textContent = "";
-        table.appendChild(h("table", { class: "xtable" }, h("thead", null, h("tr", null, h("th", null, "Section"), h("th", null, "Items marked"), h("th", null, "Average"))),
-          h("tbody", null, D.skills.map(function (sk) { var b = by[sk.id]; return h("tr", null, h("td", null, sk.name), h("td", null, b.n + " of " + b.total), h("td", null, b.n ? pct(b.sum / b.n) : "–")); }))));
+        table.appendChild(scoreTable(estimate(seq)));
       }
       drawTable();
       var list = seq.map(function (s, i) {
@@ -623,8 +652,8 @@
         return h("details", { class: "xitem" }, sum, res.review, res.score == null ? selfMark(s.task, s.idx, res, function (sc) { sum.lastChild.textContent = pct(sc); drawTable(); }) : null);
       });
       shell({ title: "Practice Test " + k + " · Results", body: h("div", null,
-          h("p", { class: "xinstr" }, "You have finished Practice Test " + k + ". Reading and most Listening items are marked automatically. Open each Speaking and Writing item to compare your response with the sample and mark yourself."),
-          table, h("p", { class: "xnote" }, "These are practice percentages, not PTE scores. Recordings are kept only until you leave this page."), list),
+          h("p", { class: "xinstr" }, "You have finished Practice Test " + k + ". Reading and most Listening items are marked automatically. Open each Speaking and Writing item, compare your response with the sample and mark yourself. Your estimated scores update as you mark."),
+          table, h("p", { class: "xnote" }, "Estimated scores are a guide only. They convert your practice marks to the 10 to 90 scale, and Speaking and Writing depend on how you mark yourself, so they are not official PTE scores. The overall estimate appears once every skill has marked items. Recordings are kept only until you leave this page."), list),
         left: { label: "Exit", fn: home }, next: { label: "Finish", fn: home } });
     }
     equipment(step);
@@ -637,9 +666,8 @@
     var targets = [["Overall", 63], ["Listening", 58], ["Reading", 59], ["Writing", 60], ["Speaking", 76]], total = 0, done = 0;
     var sets = [];
     for (var k = 1; k <= NSETS; k++) (function (k) {
-      var st = store.sets[k] || { pos: 0 }, seq = setSeq(k), n = 0, sum = 0;
-      seq.forEach(function (s) { var v = (store.p[s.task.id] || {})[s.idx]; if (v != null) { n++; sum += v; } });
-      var status = st.done ? "Completed · " + pct(sum / (n || 1)) + " on " + n + " marked items" : st.pos ? "In progress · item " + (st.pos + 1) + " of " + PER_SET : "Not started";
+      var st = store.sets[k] || { pos: 0 }, seq = setSeq(k), e = estimate(seq);
+      var status = st.done ? (e.overall != null ? "Completed · estimated overall " + e.overall + (e.overall >= TARGET.overall ? " ✓" : "") : "Completed · mark your Speaking and Writing items") : st.pos ? "In progress · item " + (st.pos + 1) + " of " + PER_SET : "Not started";
       sets.push(h("a", { class: "card", href: "#/set/" + k }, h("h3", null, "Practice Test " + k), h("p", { class: "cm" }, PER_SET + " items · about 2 hours"),
         h("div", { class: "cp" }, h("div", { class: "bar" }, h("i", { style: "width:" + ((st.done ? PER_SET : st.pos) / PER_SET) * 100 + "%" })), h("span", null, status))));
     })(k);
