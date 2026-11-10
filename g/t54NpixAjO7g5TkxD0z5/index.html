@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PTE Academic Practice · NextGen Nurses</title>
-<meta name="description" content="PTE Academic practice for nurses: all 22 question types across Speaking, Writing, Reading and Listening, with exam timings, instant marking and model answers.">
+<meta name="description" content="NextGen Nurses PTE Academic practice app for members.">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="theme-color" content="#0B1F3A">
 <meta property="og:type" content="website">
@@ -205,13 +205,100 @@ textarea{min-height:190px}
 .foot .wrap{padding-block:30px;display:grid;gap:10px}
 .foot a{color:var(--on-ink)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---------- exam-style screens ---------- */
+body.exam{background:#fff;color:#1b1b1b;font:16px/1.5 Arial,Helvetica,sans-serif;color-scheme:light}
+body.exam .nav,body.exam .foot{display:none}
+body.exam::before{display:none}
+.x{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:#fff;color:#1b1b1b}
+.x button,.x select,.x input,.x textarea{font-family:Arial,Helvetica,sans-serif;color:#1b1b1b}
+.xtop{background:#1f3b57;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));font-size:14px;position:sticky;top:0;z-index:5}
+.xt1{font-weight:700;min-width:0}.xt1 small{display:block;font-weight:400;font-size:13px;opacity:.9;margin-top:2px}
+.xbrand{color:#f5b942}
+.xt2{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.xbody{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:18px 16px 28px}
+.xbot{background:#e6ebf0;border-top:1px solid #c5ced8;display:flex;justify-content:space-between;gap:12px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));position:sticky;bottom:0;z-index:5}
+.xbtn{min-width:104px;min-height:42px;padding:8px 18px;border:1px solid #17456f;border-radius:4px;background:#1f5f99;color:#fff!important;font-size:15px;font-weight:700;cursor:pointer}
+.xbtn:hover{background:#17456f}
+.xbtn.alt{background:#fff;color:#1f3b57!important;border-color:#8fa0b2}
+.xbtn2{min-height:38px;padding:6px 14px;border:1px solid #8fa0b2;border-radius:4px;background:#f4f6f8;font-size:14px;cursor:pointer}
+.xbtn2:disabled{opacity:.5;cursor:default}
+.xinstr{font-weight:700;font-size:15.5px;margin:0 0 16px}
+.xtext{font-size:17px;line-height:1.7;margin:0 0 18px}
+.xq{font-weight:700;margin:0 0 12px}
+.xpass{font-size:16px;line-height:1.65;margin:0 0 16px;border:1px solid #d5dbe2;padding:14px;background:#fafbfc}
+.xnote{font-size:13.5px;color:#55626f;margin:8px 0}
+.xbox{border:1px solid #9aa7b5;background:#eef2f6;padding:12px 14px;max-width:420px;margin:0 auto 18px;display:grid;gap:8px;font-size:14.5px}
+.xbox.wide{max-width:none}
+.xbox.rec{border-color:#b3261e}
+.xhead{font-weight:700;font-size:14px;margin-bottom:2px}
+.xrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.xrow input[type=range]{flex:1;min-width:120px}
+.xbar{height:14px;background:#fff;border:1px solid #9aa7b5}
+.xbar i{display:block;height:100%;background:#1f5f99;transition:width .25s linear}
+.xbox.rec .xbar i{background:#b3261e}
+.xfig{border:1px solid #d5dbe2;margin:0 auto 18px;max-width:560px}
+.xfig svg{display:block;width:100%;height:auto}
+.xta{display:block;width:100%;min-height:230px;border:1px solid #6f7f90;border-radius:0;background:#fff;padding:10px 12px;font-size:16px;line-height:1.5;resize:vertical}
+.xta.short{min-height:90px}
+.xtools{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14.5px;flex-wrap:wrap}
+.xsp{flex:1}
+.xsplit.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:760px){.xsplit.two{grid-template-columns:1fr}}
+.xopts{display:grid;gap:4px}
+.xopt{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid transparent;cursor:pointer;line-height:1.45}
+.xopt input{width:18px;height:18px;margin-top:2px;flex:none}
+.xopt:hover{background:#f1f4f7}
+.xopt.ok{background:#e2f3ea;border-color:#2e8b57}
+.xopt.bad{background:#fbe6e4;border-color:#b3261e}
+.xopt.miss{border:1px dashed #2e8b57}
+.xfib{font-size:16.5px;line-height:2.5;margin:0 0 14px}
+.xfib select,.xfib input,.xslot{display:inline-block;vertical-align:baseline;min-width:118px;min-height:34px;padding:4px 8px;margin:0 3px;border:1px solid #6f7f90;border-radius:0;background:#fff;font-size:15.5px}
+.xslot{cursor:pointer;text-align:center;background:#f4f6f8}
+.xslot.full{background:#fff7d6;border-color:#a8861b}
+.xfib .ok{background:#e2f3ea!important;border-color:#2e8b57!important;color:#1b1b1b;opacity:1}
+.xfib .bad{background:#fbe6e4!important;border-color:#b3261e!important;color:#1b1b1b;opacity:1}
+.xans{font-weight:700;font-size:14px;color:#1f7a4a;margin:0 6px 0 2px}
+.xbank{display:flex;gap:8px;flex-wrap:wrap;border:1px solid #9aa7b5;background:#eef2f6;padding:12px;min-height:60px}
+.xbank button{min-height:36px;padding:5px 14px;border:1px solid #6f7f90;background:#fff;font-size:15.5px;cursor:pointer}
+.xpanel{border:1px solid #9aa7b5;background:#eef2f6;min-height:150px;padding:8px;display:grid;gap:8px;align-content:start}
+.xpara{display:block;width:100%;text-align:left;border:1px solid #6f7f90;background:#fff;padding:9px 10px;font-size:15px;line-height:1.45;cursor:pointer}
+.xpara.in{display:flex;gap:8px;align-items:center;cursor:default}
+.xpara.in>span:first-child{flex:1}
+.xpara.ok{background:#e2f3ea;border-color:#2e8b57}.xpara.bad{background:#fbe6e4;border-color:#b3261e}
+.xmv{display:flex;gap:4px;flex:none}
+.xmv button{width:34px;height:34px;border:1px solid #8fa0b2;background:#f4f6f8;cursor:pointer;font-size:12px}
+.xmv button:disabled{opacity:.3}
+.xhiw{font-size:17px;line-height:2.1;margin:0 0 12px}
+.xhiw span{cursor:pointer;padding:2px 1px}
+.xhiw span.sel{background:#ffe45c}
+.xhiw span.ok{background:#bfe6cf}.xhiw span.bad{background:#f6c9c5;text-decoration:line-through}.xhiw span.miss{outline:2px dashed #2e8b57}
+.xhiw sup{font-weight:700;font-size:12px;color:#1f7a4a;margin-left:2px}
+.xdiff span{padding:1px 4px;margin-right:3px}.xdiff .ok{background:#bfe6cf}.xdiff .bad{background:#f6c9c5}
+.xcenter{max-width:560px;margin:8vh auto 0;text-align:center;display:grid;gap:14px}
+.xcenter h2{font:700 24px/1.2 Arial,Helvetica,sans-serif;letter-spacing:0}
+.xscore{font-weight:700;font-size:18px;margin:0 0 14px;padding:10px 12px;background:#eef2f6;border-left:5px solid #1f5f99}
+.rv{margin:0 0 16px}.rvl{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#55626f;margin-bottom:4px}
+.x .model{font-size:16px;line-height:1.6;margin:0}.x .model p{margin:0 0 6px}
+.x .mine{border:1px solid #d5dbe2;padding:10px 12px;background:#fafbfc;white-space:pre-wrap}
+.x audio{width:100%;max-width:420px}
+.plain{margin:0;padding-left:20px;display:grid;gap:4px}
+.xchecks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.xchecks label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.xchecks input{width:18px;height:18px;margin-top:2px;flex:none}
+.xtable{border-collapse:collapse;width:100%;max-width:520px;margin:0 0 8px;font-size:15px}
+.xtable th,.xtable td{border:1px solid #9aa7b5;padding:8px 10px;text-align:left}.xtable th{background:#eef2f6}
+.xitem{border:1px solid #c5ced8;margin-top:8px;padding:0 12px}
+.xitem summary{cursor:pointer;font-weight:700;padding:11px 0;display:flex;gap:10px;justify-content:space-between;align-items:center}
+.xitem[open]{padding-bottom:12px}
+.xtag{font-weight:400;font-size:13px;color:#55626f;white-space:nowrap}
 </style>
 </head>
 <body>
 <nav class="nav" aria-label="Main"><div class="wrap">
   <a class="brand" href="#/"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#2E1F02" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-5 4 10 2-5h8"/></svg></span><span>NextGen Nurses<small>PTE Academic practice</small></span></a>
   <span class="sp"></span>
-  <a class="back" href="/">← Main site</a>
+  <a class="back" href="/">Main site</a>
 </div></nav>
 
 <main id="app"><div class="wrap" style="padding-block:60px"><p>Loading practice…</p></div></main>
@@ -223,6 +310,13 @@ textarea{min-height:190px}
 </div></footer>
 
 <script src="/g/t54NpixAjO7g5TkxD0z5/data.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/pool1.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/pool2.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/pool3.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/pool4.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/pool5.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/pool6.js"></script>
+
 <script src="/g/t54NpixAjO7g5TkxD0z5/app.js"></script>
 </body>
 </html>
