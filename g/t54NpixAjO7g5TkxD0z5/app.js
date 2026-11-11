@@ -683,7 +683,7 @@
     app.appendChild(h("header", { class: "hero" }, h("div", { class: "wrap" },
       h("div", { class: "eyebrow" }, "PTE Academic · member practice"),
       h("h1", null, NSETS + " full practice tests, ", h("em", null, "in test conditions.")),
-      h("p", null, total + " questions across all 22 question types. Sit a full practice test in an exam-style screen, or drill one question type at a time."),
+      h("p", null, total.toLocaleString("en-AU") + " questions across all 22 question types. Sit a full practice test in an exam-style screen, or drill one question type at a time."),
       h("div", { class: "targets", role: "group", "aria-label": "NMBA minimum PTE Academic scores" }, targets.map(function (t) { return h("div", null, h("b", null, t[1]), h("span", null, t[0])); })),
       h("p", { class: "note" }, "NMBA minimum scores for tests taken on or after 23 April 2026. Always confirm on ",
         h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra's accepted English tests page"), " before you book."))));
