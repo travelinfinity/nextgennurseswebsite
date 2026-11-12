@@ -1378,7 +1378,7 @@ function countUp(){
         "Intensive window (2–3 weeks before)":fmtS(w.from)+" – "+fmtS(w.to),
         "Message":message||"(no message)","Course":"AHPRA RN OSCE Face-to-Face Intensive ("+SITE.OSCE_F2F_PRICE+", in partnership with NOTC)"})});
       const d=await r.json().catch(()=>({}));
-      if(!r.ok||String(d.success)==="false")throw new Error(d.message||"send failed");
+      if(!r.ok||String(d.success)==="false"){err.textContent=/activat/i.test(d.message||"")?"Our enquiry form is being set up. Please try again shortly.":"Sorry, your enquiry didn't send. Please try again in a moment.";return}
       form.reset();win.hidden=true;sent.hidden=false;
     }catch(x){err.textContent="Sorry, your enquiry didn't send. Please check your connection and try again."}
     finally{btn.disabled=false;btn.textContent=label}
