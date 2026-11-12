@@ -307,6 +307,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .fgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 @media (max-width:900px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.fgrid{grid-template-columns:1fr}}
+.fgrid.offices{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.fgrid.offices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.fgrid.offices{grid-template-columns:1fr}}
+.offices .feat a{color:inherit;font-weight:700}
 .feat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:8px;align-content:start;transition:transform .3s,border-color .3s}
 .feat:hover{transform:translateY(-4px);border-color:var(--fc,var(--teal))}
 .feat svg{width:30px;height:30px;color:var(--fc,var(--teal))}
@@ -788,6 +792,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
         <button class="btn btn-mint" type="submit" id="f2fSubmit"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>Send on WhatsApp</button>
         <div class="sent" id="f2fSent" hidden role="status"><b>WhatsApp is opening with your enquiry typed in.</b> Press send in WhatsApp and we'll reply to confirm availability in your intake. If it didn't open, message us on WhatsApp at 0458 567 621.</div>
       </form>
+    </div>
+  </div></section>
+  <section class="section" style="padding-top:0" id="f2f-offices"><div class="wrap">
+    <div class="head"><div class="eyebrow">Global reach</div><h2>Our training offices</h2><p>Face-to-face training runs with our partner, Nursing OSCE Training Centre (NOTC), across Australia, with offices in the Philippines and Nepal.</p></div>
+    <div class="fgrid offices" style="--fc:var(--teal)">
+      <div class="feat rise" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><h3>Main Offices (AUS)</h3><p>Hurstville &amp; Adelaide<br><a href="tel:1800292985">1800 292 985</a></p></div>
+      <div class="feat rise" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><h3>Melbourne Office</h3><p>Queen Street, Melbourne Victoria 3000</p></div>
+      <div class="feat rise" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><h3>Philippines Office</h3><p>Makati City, PH</p></div>
+      <div class="feat rise" style="--i:3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><h3>Nepal Office</h3><p>Battisputali, Kathmandu, Nepal</p></div>
     </div>
   </div></section>
   <section class="section" style="padding-top:0"><div class="wrap">
