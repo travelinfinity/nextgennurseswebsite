@@ -4,7 +4,7 @@ window.PTE_DATA = {
     { id: "speaking", name: "Speaking", blurb: "Spoken into your microphone, with exam timings." },
     { id: "writing", name: "Writing", blurb: "Typed against the clock with a live word count." },
     { id: "reading", name: "Reading", blurb: "Marked instantly, with the reason for each answer." },
-    { id: "listening", name: "Listening", blurb: "Audio played by your device, marked instantly." }
+    { id: "listening", name: "Listening", blurb: "Natural-voice recordings, marked instantly." }
   ],
   tasks: [
     /* ------------------------------------------------------------ SPEAKING */

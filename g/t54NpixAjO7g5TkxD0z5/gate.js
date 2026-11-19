@@ -158,6 +158,7 @@
   function readLocal() { try { var r = JSON.parse(localStorage.getItem(KEY) || "null"); return r && r.p ? r : null; } catch (e) { return null; } }
   function merge(a, b) {   // combine two progress stores without losing anything
     var out = { p: {}, sets: {} };
+    if ((b && b.exam) || (a && a.exam)) out.exam = (b && b.exam) || a.exam;   // exam date: this device's copy wins
     [a, b].forEach(function (src) {
       if (!src) return;
       Object.keys(src.p || {}).forEach(function (t) {

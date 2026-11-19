@@ -579,7 +579,13 @@
       elapsed: function () { clockWrap.hidden = false; clockWrap.firstChild.nodeValue = "Time on item "; var t0 = Date.now(); var iv = setInterval(function () { clock.textContent = "00:" + mmss((Date.now() - t0) / 1000); }, 500); clock.textContent = "00:00:00"; onLeave(function () { clearInterval(iv); }); }
     };
   }
-  function home() { leave(); releaseMic(); location.hash = "#/"; if (location.hash === "#/") viewHome(); }
+  // Exit from an exam screen back to its page: a question type, a practice test, or the overview.
+  function home() {
+    leave(); releaseMic();
+    var hs = location.hash || "", m = hs.match(/^#\/t\/([a-z]+)\//), k = hs.match(/^#\/set\/(\d+)/);
+    var dest = m && TASKS[m[1]] ? "#/type/" + m[1] : k ? "#/test/" + k[1] : "#/";
+    if (location.hash === dest) route(); else location.hash = dest;
+  }
 
   // Speaker and microphone check, once per visit. The Start click also unlocks audio on phones.
   function equipment(then) {
@@ -714,54 +720,191 @@
   }
 
   /* ---------- dashboard ---------- */
-  function viewHome() {
-    leave(); releaseMic(); document.body.classList.remove("exam");
-    document.title = "PTE Academic Practice · NextGen Nurses";
-    var targets = [["Overall", 63], ["Listening", 58], ["Reading", 59], ["Writing", 60], ["Speaking", 76]], total = 0, done = 0;
-    var sets = [];
-    for (var k = 1; k <= NSETS; k++) (function (k) {
-      var st = store.sets[k] || { pos: 0 }, seq = setSeq(k), e = estimate(seq);
-      var status = st.done ? (e.overall != null ? "Completed · estimated overall " + e.overall + (e.overall >= TARGET.overall ? " ✓" : "") : "Completed · mark your Speaking and Writing items") : st.pos ? "In progress · item " + (st.pos + 1) + " of " + PER_SET : "Not started";
-      sets.push(h("a", { class: "card", href: "#/set/" + k }, h("h3", null, "Practice Test " + k), h("p", { class: "cm" }, PER_SET + " items · about 2 hours"),
-        h("div", { class: "cp" }, h("div", { class: "bar" }, h("i", { style: "width:" + ((st.done ? PER_SET : st.pos) / PER_SET) * 100 + "%" })), h("span", null, status))));
-    })(k);
-    var sections = D.skills.map(function (sk) {
-      return h("section", { class: "skill" }, h("h2", null, sk.name, h("span", null, sk.blurb)),
-        h("div", { class: "cards" }, D.tasks.filter(function (t) { return t.skill === sk.id; }).map(function (t) {
-          var s = stat(t); total += s.total; done += s.done;
-          return h("a", { class: "card", href: "#/t/" + t.id + "/" + Math.min(s.done, s.total - 1) }, h("h3", null, t.name), h("p", { class: "cm" }, t.meta.slice(0, 2).join(" · ")),
-            h("div", { class: "cp" }, h("div", { class: "bar" }, h("i", { style: "width:" + (s.done / s.total) * 100 + "%" })), s.done + "/" + s.total + (s.done ? " · " + pct(s.avg) : "")));
-        })));
+  /* ---------- dashboard: sidebar (tests + question types) and main panel ---------- */
+  var ABBR = { ra: "RA", rs: "RS", di: "DI", rl: "RL", asq: "ASQ", rts: "RTS", sgd: "SGD", swt: "SWT", we: "WE", rwfib: "RWFIB", rmcm: "MCM", ro: "RO", rfib: "FIB", rmcs: "MCS",
+    sst: "SST", lmcm: "MCM", lfib: "FIB", hcs: "HCS", lmcs: "MCS", smw: "SMW", hiw: "HIW", wfd: "WFD" };
+  var SIDE_NAME = { rwfib: "R&W Fill in the Blanks", rmcm: "Multiple Choice (Multiple)", rfib: "Fill in the Blanks", rmcs: "Multiple Choice (Single)",
+    lmcm: "Multiple Choice (Multiple)", lfib: "Fill in the Blanks", lmcs: "Multiple Choice (Single)", sgd: "Summarize Group Discussion" };
+  var SKILL_SHORT = { speaking: "Speaking", writing: "Writing", reading: "Reading", listening: "Listening" };
+  function setInfo(k) {
+    var st = store.sets[k] || { pos: 0 }, e = estimate(setSeq(k));
+    return { st: st, e: e, state: st.done ? "done" : st.pos ? "progress" : "new",
+      label: st.done ? (e.overall != null ? "Done · est. " + e.overall : "Done · mark yourself") : st.pos ? "Item " + (st.pos + 1) + " of " + PER_SET : "Not started" };
+  }
+  function totals() {
+    var t = { done: 0, total: 0, sum: 0, skills: {} };
+    D.skills.forEach(function (sk) { t.skills[sk.id] = { done: 0, total: 0, sum: 0 }; });
+    D.tasks.forEach(function (task) {
+      var p = store.p[task.id] || {}, s = t.skills[task.skill];
+      task.items.forEach(function (_, i) { s.total++; t.total++; if (p[i] != null) { s.done++; s.sum += p[i]; t.done++; t.sum += p[i]; } });
     });
+    return t;
+  }
+  function bar(frac, cls) { return h("div", { class: "bar" + (cls ? " " + cls : "") }, h("i", { style: "width:" + Math.round(Math.max(0, Math.min(1, frac)) * 100) + "%" })); }
+  function closeSide() { document.body.classList.remove("side-open"); }
+  function sidebar(active) {
+    var tests = [];
+    for (var k = 1; k <= NSETS; k++) {
+      var si = setInfo(k);
+      tests.push(h("a", { href: "#/test/" + k, class: "sl" + (active === "test" + k ? " on" : ""), onclick: closeSide },
+        h("i", { class: "sdot st-" + si.state, "aria-hidden": "true" }), h("span", { class: "sn" }, "Practice Test " + k),
+        h("span", { class: "sx" }, si.state === "done" ? (si.e.overall != null ? String(si.e.overall) : "✓") : si.state === "progress" ? Math.round((si.st.pos / PER_SET) * 100) + "%" : "")));
+    }
+    var groups = D.skills.map(function (sk) {
+      return h("div", { class: "sg" }, h("p", { class: "sh" }, sk.name),
+        D.tasks.filter(function (t) { return t.skill === sk.id; }).map(function (t) {
+          var s = stat(t);
+          return h("a", { href: "#/type/" + t.id, class: "sl" + (active === "type" + t.id ? " on" : ""), onclick: closeSide, title: t.name },
+            h("b", { class: "ab ab-" + t.skill }, ABBR[t.id]), h("span", { class: "sn" }, SIDE_NAME[t.id] || t.name), h("span", { class: "sx" }, s.done + "/" + s.total));
+        }));
+    });
+    return h("aside", { class: "side", "aria-label": "Practice tests and question types" },
+      h("a", { href: "#/", class: "sl home" + (active === "home" ? " on" : ""), onclick: closeSide }, h("b", { class: "ab ab-home" }, "⌂"), h("span", { class: "sn" }, "Overview")),
+      h("p", { class: "sh" }, "Practice tests"), h("div", { class: "sg tests" }, tests),
+      h("p", { class: "sh big" }, "Question types"), groups);
+  }
+  function dash(active, title, body) {
+    leave(); releaseMic(); document.body.classList.remove("exam"); closeSide();
+    document.title = title + " · PTE practice";
     app.textContent = "";
-    app.appendChild(h("header", { class: "hero" }, h("div", { class: "wrap" },
-      h("div", { class: "eyebrow" }, "PTE Academic · member practice"),
-      h("h1", null, NSETS + " full practice tests, ", h("em", null, "in test conditions.")),
-      h("p", null, total.toLocaleString("en-AU") + " questions across all 22 question types. Sit a full practice test in an exam-style screen, or drill one question type at a time."),
-      h("div", { class: "targets", role: "group", "aria-label": "NMBA minimum PTE Academic scores" }, targets.map(function (t) { return h("div", null, h("b", null, t[1]), h("span", null, t[0])); })),
-      h("p", { class: "note" }, "NMBA minimum scores for tests taken on or after 23 April 2026. Always confirm on ",
-        h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra's accepted English tests page"), " before you book."))));
-    app.appendChild(h("div", { class: "wrap main" },
-      h("div", { class: "promo" }, h("div", null, h("b", null, "Signed in as " + ((window.PTE_USER && window.PTE_USER.email) || "your account")), h("span", { class: "muted small" }, "Your scores and practice test progress save to your account, so you can carry on from any phone or computer.")),
-        h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (window.PTE_SIGNOUT) window.PTE_SIGNOUT(); } }, "Sign out")),
-      h("section", { class: "skill" }, h("h2", null, "Full practice tests", h("span", null, "Speaking and Writing, then Reading, then Listening, marked at the end.")), h("div", { class: "cards" }, sets)),
-      h("section", { class: "skill" }, h("h2", null, "PTE review guides (PDF)", h("span", null, "Included with the app. Save them to study offline or print.")), h("div", { class: "cards" },
-        [["Tips and Strategies for Nurses", "26 pages · timing, approach and common mistakes for all 22 question types, including Respond to a Situation and Summarize Group Discussion.", "NextGen-Nurses-PTE-Tips-and-Strategies.pdf"],
-         ["Answer Short Questions bank", "8 pages · common general-knowledge questions grouped by topic. Cover the answers and say yours aloud in about 3 seconds.", "NextGen-Nurses-PTE-Short-Answer-Review.pdf"]].map(function (g) {
-          return h("a", { class: "card", href: "/g/dS4yQmu2DyZ3meG5W924/" + g[2], download: g[2], target: "_blank", rel: "noopener" },
-            h("h3", null, g[0]), h("p", { class: "cm" }, g[1]), h("span", { class: "cp" }, "Download PDF ↓"));
-        }))),
-      h("div", { class: "overall" }, h("b", null, "Practise by question type: " + done + " of " + total + " done"), h("div", { class: "bar" }, h("i", { style: "width:" + (done / total) * 100 + "%" })),
-        done ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (!confirm("Clear all your saved progress? This also clears it from your account on every device.")) return; store = { p: {}, sets: {} }; persist(); viewHome(); } }, "Reset progress") : null),
-      sections,
-      h("p", { class: "muted small" }, "Speaking items need a microphone. Listening items play natural-voice recordings with a mix of American and British accents. Chrome, Edge and Safari work best.")));
+    app.appendChild(h("div", { class: "dash" },
+      h("button", { class: "side-toggle btn btn-line btn-sm", type: "button", "aria-label": "Show practice tests and question types", onclick: function () { document.body.classList.toggle("side-open"); } }, "☰  Tests & question types"),
+      h("div", { class: "side-scrim", onclick: closeSide }),
+      sidebar(active), h("div", { class: "dmain" }, body)));
+    var on = app.querySelector(".side .sl.on"); if (on && on.scrollIntoView && active !== "home") try { on.scrollIntoView({ block: "nearest" }); } catch (e) {}
     window.scrollTo(0, 0);
+  }
+  function tile(label, value, sub) { return h("div", { class: "tile" }, h("span", { class: "tl" }, label), h("b", null, value), sub ? h("span", { class: "ts" }, sub) : null); }
+
+  function viewHome() {
+    var t = totals(), completed = [], next = null;
+    for (var k = 1; k <= NSETS; k++) { var si = setInfo(k); if (si.state === "done") completed.push({ k: k, e: si.e }); if (!next && si.state === "progress") next = { k: k, si: si }; }
+    if (!next) for (k = 1; k <= NSETS; k++) if (setInfo(k).state === "new") { next = { k: k, si: setInfo(k) }; break; }
+    var best = completed.reduce(function (m, c) { return c.e.overall != null && (m == null || c.e.overall > m) ? c.e.overall : m; }, null);
+    var name = (window.PTE_USER && window.PTE_USER.email) || "";
+
+    // exam date countdown (saved with progress)
+    var exam = h("div", { class: "exam-date" });
+    function drawExam() {
+      exam.textContent = "";
+      var d = store.exam ? new Date(store.exam + "T00:00:00") : null, days = d ? Math.ceil((d - new Date(new Date().toDateString())) / 864e5) : null;
+      var input = h("input", { type: "date", value: store.exam || "", "aria-label": "Your PTE test date", onchange: function () { store.exam = input.value || undefined; persist(); drawExam(); } });
+      exam.appendChild(h("div", null, h("span", { class: "tl" }, "Your test date"),
+        h("b", null, d && days >= 0 ? (days === 0 ? "Today. Good luck!" : days + " day" + (days === 1 ? "" : "s") + " to go") : d ? "Test date passed" : "Not set"),
+        h("span", { class: "ts" }, d ? "" : "Add it to see a countdown.")), input);
+    }
+    drawExam();
+
+    var skillRows = D.skills.map(function (sk) {
+      var s = t.skills[sk.id];
+      return h("div", { class: "srow" }, h("div", { class: "srh" }, h("b", null, sk.name), h("span", null, s.done + " of " + s.total + " practised" + (s.done ? " · average " + pct(s.sum / s.done) : ""))),
+        bar(s.total ? s.done / s.total : 0, "sk-" + sk.id));
+    });
+
+    var recent = completed.slice(-5).reverse();
+    var body = h("div", { class: "dwrap" },
+      h("div", { class: "dhead" },
+        h("div", null, h("p", { class: "eyebrow" }, "PTE Academic · member practice"), h("h1", null, "Overview"),
+          h("p", { class: "muted small" }, name ? "Signed in as " + name + " · progress saves to your account. " : "", h("button", { class: "linkbtn", type: "button", onclick: function () { if (window.PTE_SIGNOUT) window.PTE_SIGNOUT(); } }, "Sign out"))),
+        exam),
+      h("div", { class: "tiles" },
+        tile("Questions practised", t.done.toLocaleString("en-AU"), "of " + t.total.toLocaleString("en-AU")),
+        tile("Average mark", t.done ? pct(t.sum / t.done) : "–", "across all question types"),
+        tile("Practice tests done", completed.length + " / " + NSETS, NSETS + " full tests in exam format"),
+        tile("Best estimated overall", best != null ? String(best) : "–", "NMBA target " + TARGET.overall)),
+      next ? h("a", { class: "cont", href: "#/test/" + next.k },
+        h("div", null, h("span", { class: "tl" }, next.si.state === "progress" ? "Continue where you left off" : "Up next"),
+          h("b", null, "Practice Test " + next.k), h("span", { class: "ts" }, next.si.state === "progress" ? "Item " + (next.si.st.pos + 1) + " of " + PER_SET + " · " + Math.round((next.si.st.pos / PER_SET) * 100) + "% done" : PER_SET + " items · about 2 hours · Speaking & Writing, Reading, Listening")),
+        h("span", { class: "btn btn-amber" }, next.si.state === "progress" ? "Resume" : "Start test")) : null,
+      h("div", { class: "dgrid" },
+        h("section", { class: "panel" }, h("h2", null, "Progress by skill"), skillRows,
+          h("p", { class: "muted small" }, "Practise one question type at a time from the menu. Many items score two skills, as in the real test.")),
+        h("section", { class: "panel" }, h("h2", null, "Recent practice tests"),
+          recent.length ? h("table", { class: "rtable" }, h("thead", null, h("tr", null, h("th", null, "Test"), h("th", null, "Overall"), D.skills.map(function (sk) { return h("th", null, sk.name.charAt(0)); }))),
+            h("tbody", null, recent.map(function (c) {
+              function cell(v, tg) { return h("td", { class: v == null ? "" : v >= tg ? "ok" : "lo" }, v == null ? "–" : String(v)); }
+              return h("tr", { onclick: function () { location.hash = "#/test/" + c.k; } }, h("td", null, h("a", { href: "#/test/" + c.k }, "Test " + c.k)), cell(c.e.overall, TARGET.overall),
+                D.skills.map(function (sk) { return cell(c.e.skills[sk.id].score, TARGET[sk.id]); }));
+            })))
+          : h("p", { class: "muted" }, "Finish a practice test to see your estimated scores here, next to the NMBA targets."),
+          h("p", { class: "muted small" }, "S = Speaking, W = Writing, R = Reading, L = Listening. Green meets the NMBA minimum."))),
+      h("section", { class: "panel" }, h("h2", null, "NMBA minimum scores"),
+        h("div", { class: "targets2" }, [["Overall", TARGET.overall], ["Listening", TARGET.listening], ["Reading", TARGET.reading], ["Writing", TARGET.writing], ["Speaking", TARGET.speaking]].map(function (x) { return h("div", null, h("b", null, x[1]), h("span", null, x[0])); })),
+        h("p", { class: "muted small" }, "For tests taken on or after 23 April 2026. Always confirm on ",
+          h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra's accepted English tests page"), " before you book.")),
+      h("section", { class: "panel" }, h("h2", null, "PTE review guides (PDF)"),
+        h("div", { class: "cards" }, [["Tips and Strategies for Nurses", "26 pages · timing, approach and common mistakes for all 22 question types.", "NextGen-Nurses-PTE-Tips-and-Strategies.pdf"],
+          ["Answer Short Questions bank", "8 pages · common general-knowledge questions grouped by topic.", "NextGen-Nurses-PTE-Short-Answer-Review.pdf"]].map(function (g) {
+          return h("a", { class: "card", href: "/g/dS4yQmu2DyZ3meG5W924/" + g[2], download: g[2], target: "_blank", rel: "noopener" }, h("h3", null, g[0]), h("p", { class: "cm" }, g[1]), h("span", { class: "cp" }, "Download PDF ↓"));
+        }))),
+      h("p", { class: "muted small" }, "Speaking items need a microphone. Listening items play natural-voice recordings with a mix of American and British accents. Chrome, Edge and Safari work best. ",
+        t.done || completed.length ? h("button", { class: "linkbtn", type: "button", onclick: function () { if (!confirm("Clear all your saved progress? This also clears it from your account on every device.")) return; store = { p: {}, sets: {} }; persist(); viewHome(); } }, "Reset all progress") : null));
+    dash("home", "Overview", body);
+  }
+
+  function viewTest(k) {
+    var si = setInfo(k), seq = setSeq(k), parts = [];
+    seq.forEach(function (s) {
+      var part = PARTS[s.task.skill], last = parts[parts.length - 1];
+      if (!last || last.name !== part) parts.push(last = { name: part, types: [], n: 0 });
+      var ty = last.types[last.types.length - 1];
+      if (!ty || ty.task !== s.task) last.types.push(ty = { task: s.task, n: 0 });
+      ty.n++; last.n++;
+    });
+    var mins = { "Part 1: Speaking and Writing": "about 75 minutes", "Part 2: Reading": "about 30 minutes", "Part 3: Listening": "about 45 minutes" };
+    var cta = si.state === "progress" ? "Resume test" : si.state === "done" ? "Retake test" : "Start test";
+    var body = h("div", { class: "dwrap" },
+      h("div", { class: "dhead" }, h("div", null, h("p", { class: "eyebrow" }, "Full practice test"), h("h1", null, "Practice Test " + k),
+        h("p", { class: "muted" }, seq.length + " items in three parts, about two hours. Marks are shown at the end. You can save and exit at any time and carry on later."))),
+      h("div", { class: "cont static" },
+        h("div", null, h("span", { class: "tl" }, "Status"), h("b", null, si.state === "done" ? "Completed" : si.state === "progress" ? "In progress" : "Not started"),
+          h("span", { class: "ts" }, si.state === "progress" ? "Next: item " + (si.st.pos + 1) + " of " + PER_SET : si.state === "done" ? (si.e.overall != null ? "Estimated overall " + si.e.overall + " (NMBA target " + TARGET.overall + ")" : "Mark your Speaking and Writing items to see an overall estimate") : "Use headphones with a microphone and find a quiet place."),
+          si.state === "progress" ? bar(si.st.pos / PER_SET) : null),
+        h("a", { class: "btn btn-amber", href: "#/set/" + k, onclick: function (e) { if (si.state === "done" && !confirm("Start Practice Test " + k + " again from the beginning? Your saved marks stay until you answer each item again.")) e.preventDefault(); } }, cta)),
+      si.state === "done" ? h("section", { class: "panel" }, h("h2", null, "Estimated scores"), scoreTable(si.e)) : null,
+      h("section", { class: "panel" }, h("h2", null, "What's in this test"),
+        parts.map(function (pt) {
+          return h("div", { class: "part" }, h("div", { class: "ph" }, h("b", null, pt.name), h("span", null, pt.n + " items · " + (mins[pt.name] || ""))),
+            h("ul", { class: "plist" }, pt.types.map(function (ty) {
+              return h("li", null, h("b", { class: "ab ab-" + ty.task.skill }, ABBR[ty.task.id]), h("span", null, ty.task.name), h("span", { class: "muted" }, "× " + ty.n));
+            })));
+        })),
+      h("p", { class: "muted small" }, "Estimated scores are a guide only, not official PTE scores. Speaking and Writing depend on how you mark yourself against the sample answers."));
+    dash("test" + k, "Practice Test " + k, body);
+  }
+
+  function viewType(task) {
+    var s = stat(task), p = store.p[task.id] || {}, firstOpen = 0;
+    while (firstOpen < task.items.length && p[firstOpen] != null) firstOpen++;
+    if (firstOpen >= task.items.length) firstOpen = 0;
+    var grid = h("div", { class: "qgrid", role: "list" }, task.items.map(function (_, i) {
+      var v = p[i], cls = v == null ? "" : v >= 0.8 ? "hi" : v >= 0.5 ? "mid" : "lo";
+      return h("a", { href: "#/t/" + task.id + "/" + i, class: "q " + cls, role: "listitem", title: "Question " + (i + 1) + (v != null ? " · " + pct(v) : " · not practised"), "aria-label": "Question " + (i + 1) + (v != null ? ", " + pct(v) : ", not practised") }, String(i + 1));
+    }));
+    var body = h("div", { class: "dwrap" },
+      h("div", { class: "dhead" }, h("div", null, h("p", { class: "eyebrow" }, SKILL_SHORT[task.skill] + " · " + ABBR[task.id]), h("h1", null, task.name),
+        h("p", { class: "muted" }, INSTR[task.id]))),
+      h("div", { class: "tiles three" },
+        tile("Practised", s.done + " / " + s.total, s.done ? pct(s.done / s.total) + " of this type" : "none yet"),
+        tile("Average mark", s.done ? pct(s.avg) : "–", task.kind === "speak" || task.kind === "write" ? "self-marked" : "marked automatically"),
+        tile("Format", task.meta[0] || "", task.meta.slice(1).join(" · "))),
+      h("div", { class: "cont static" }, h("div", null, h("span", { class: "tl" }, s.done && s.done < s.total ? "Carry on" : "Start practising"), h("b", null, "Question " + (firstOpen + 1)),
+        h("span", { class: "ts" }, "Exam-style screen with real timings. Press Next to move through the questions.")),
+        h("a", { class: "btn btn-amber", href: "#/t/" + task.id + "/" + firstOpen }, s.done ? "Continue" : "Start")),
+      h("div", { class: "dgrid" },
+        h("section", { class: "panel" }, h("h2", null, "Tips"), h("ul", { class: "tips" }, (task.tips || []).map(function (x) { return h("li", null, x); }))),
+        task.criteria && task.criteria.length ? h("section", { class: "panel" }, h("h2", null, task.kind === "speak" || task.kind === "write" ? "Mark yourself on" : "How it is marked"), h("ul", { class: "tips" }, task.criteria.map(function (x) { return h("li", null, x); }))) : null),
+      h("section", { class: "panel" }, h("h2", null, "All questions", h("span", { class: "legend" }, h("i", { class: "q hi" }), "80%+", h("i", { class: "q mid" }), "50–79%", h("i", { class: "q lo" }), "below 50%", h("i", { class: "q" }), "not practised")), grid));
+    dash("type" + task.id, task.name, body);
   }
 
   function route() {
     var hs = location.hash || "", m = hs.match(/^#\/t\/([a-z]+)\/(\d+)/), s = hs.match(/^#\/set\/(\d+)/), task = m && TASKS[m[1]];
+    var tv = hs.match(/^#\/test\/(\d+)/), ty = hs.match(/^#\/type\/([a-z]+)/);
     if (task) { document.title = task.name + " · PTE practice"; practice(task, Math.min(parseInt(m[2], 10), task.items.length - 1)); }
     else if (s && +s[1] >= 1 && +s[1] <= NSETS) { document.title = "Practice Test " + s[1] + " · PTE practice"; runSet(+s[1]); }
+    else if (tv && +tv[1] >= 1 && +tv[1] <= NSETS) viewTest(+tv[1]);
+    else if (ty && TASKS[ty[1]]) viewType(TASKS[ty[1]]);
     else viewHome();
   }
   addEventListener("hashchange", route);
