@@ -152,11 +152,19 @@
   function loadVoices() {
     if (!synth) return;
     var all = synth.getVoices().filter(function (v) { return /^en[-_]/i.test(v.lang); });
-    var rank = function (v) { return (/en[-_]AU/i.test(v.lang) ? 0 : /en[-_]GB/i.test(v.lang) ? 1 : 2) + (v.localService ? 0 : 0.5); };
+    // Natural-sounding voices first (Edge "Natural", Apple Siri/Premium/Enhanced, Google), then by accent.
+    var rank = function (v) {
+      var n = v.name || "", q = /natural|neural|online/i.test(n) ? 0 : /premium|enhanced|siri/i.test(n) ? 1 : /google/i.test(n) ? 2 : /compact|espeak|robot/i.test(n) ? 9 : 4;
+      return q * 10 + (/en[-_]AU/i.test(v.lang) ? 0 : /en[-_]GB/i.test(v.lang) ? 1 : 2);
+    };
     voices = all.sort(function (a, b) { return rank(a) - rank(b); });
   }
   if (synth) { loadVoices(); if (synth.addEventListener) synth.addEventListener("voiceschanged", loadVoices); }
-  function stopSpeak() { speakToken++; if (synth) try { synth.cancel(); } catch (e) {} }
+  function stopSpeak() {
+    speakToken++; clearTimeout(clipGuard);
+    if (aud) try { aud.onended = aud.onerror = null; aud.pause(); } catch (e) {}
+    if (synth) try { synth.cancel(); } catch (e) {}
+  }
   function segs(audio) { return typeof audio === "string" ? [{ v: 0, t: audio }] : audio; }
   function audioChars(audio) { return segs(audio).reduce(function (a, s) { return a + s.t.length; }, 0); }
   function transcript(audio) {
@@ -164,7 +172,51 @@
     if (s.length === 1) return h("p", { class: "model" }, s[0].t);
     return h("div", { class: "model" }, s.map(function (x) { return h("p", null, h("b", null, "Speaker " + (x.v + 1) + ": "), x.t); }));
   }
+  /* ---------- audio out: natural-voice recordings, with device voice as a fallback ---------- */
+  // Recordings live in /pte-audio/<key>.mp3; window.PTE_CLIPS (clips.js, next to this file) maps key -> seconds.
+  var CLIPS = window.PTE_CLIPS || {}, CLIP_BASE = "/pte-audio/", clipGuard;
+  var aud = window.Audio ? new Audio() : null;
+  if (aud) { aud.preload = "auto"; aud.setAttribute("playsinline", ""); }
+  function clipKey(sg) {   // must match the generator's clipkey.js
+    var s = sg.map(function (x) { return (x.v || 0) + ":" + String(x.t).trim(); }).join("\n"), a = 0x811c9dc5, b = 0x01000193 ^ 0x5bd1e995, i, c;
+    for (i = 0; i < s.length; i++) { c = s.charCodeAt(i); a ^= c; a = Math.imul(a, 0x01000193); b ^= c; b = Math.imul(b, 0x5bd1e995); b ^= b >>> 15; }
+    return ("0000000" + (a >>> 0).toString(16)).slice(-8) + ("0000000" + (b >>> 0).toString(16)).slice(-8);
+  }
+  function clipFor(audio) { var k = clipKey(segs(audio)); return CLIPS[k] ? { url: CLIP_BASE + k + ".mp3", secs: CLIPS[k] } : null; }
+  function prefetch(audio) { var c = clipFor(audio); if (c && window.fetch) try { fetch(c.url).catch(function () {}); } catch (e) {} }
+  // Phones only let a page play sound after a tap, so unlock the player on the first tap anywhere.
+  var unlocked = false;
+  function unlockAudio() {
+    if (unlocked || !aud) return; unlocked = true;
+    try { aud.muted = true; aud.src = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//OEwAAAAAAAAAAAAEluZm8AAAAPAAAABwAAA2AAVVVVVVVVVVVVVVVVVVVxcXFxcXFxcXFxcXFxcY6Ojo6Ojo6Ojo6Ojo6Oqqqqqqqqqqqqqqqqqqqqx8fHx8fHx8fHx8fHx8fj4+Pj4+Pj4+Pj4+Pj4///////////////////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQEIAAAAAAAAANgmVBi7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//NExAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExFMAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKYAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMu//NExKwAAANIAAAAADEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NExKwAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+      var p = aud.play(); if (p && p.then) p.then(function () { aud.pause(); aud.muted = false; }).catch(function () { aud.muted = false; unlocked = false; });
+      else { aud.pause(); aud.muted = false; }
+    } catch (e) { aud.muted = false; unlocked = false; }
+  }
+  ["pointerdown", "touchend", "keydown"].forEach(function (ev) { addEventListener(ev, unlockAudio, { capture: true, passive: true }); });
+  function playClip(c, my, cb) {
+    var fin = false;
+    function fin1(ok) { if (fin) return; fin = true; clearTimeout(clipGuard); aud.onended = aud.onerror = null; if (my === speakToken) cb(ok); }
+    try {
+      aud.muted = false; aud.src = c.url; aud.volume = volume;
+      aud.onended = function () { fin1(true); };
+      aud.onerror = function () { fin1(false); };
+      // Not started within 10 s (slow or blocked): use the device voice. Never hang past the clip's length.
+      clipGuard = setTimeout(function () {
+        if (aud.currentTime > 0) { clipGuard = setTimeout(function () { fin1(true); }, (c.secs + 8) * 1000); }
+        else { try { aud.pause(); } catch (e) {} fin1(false); }
+      }, 10000);
+      var p = aud.play(); if (p && p.catch) p.catch(function () { fin1(false); });
+    } catch (e) { fin1(false); }
+  }
   function speak(audio, done) {
+    stopSpeak();
+    var c = aud && clipFor(audio);
+    if (!c) { speakTTS(audio, done); return; }
+    var my = speakToken;
+    playClip(c, my, function (ok) { if (ok) done(true); else speakTTS(audio, done); });
+  }
+  function speakTTS(audio, done) {
     stopSpeak();
     if (!synth || !window.SpeechSynthesisUtterance) { done(false); return; }
     var my = ++speakToken, queue = [], finished = false;
@@ -208,7 +260,8 @@
   // Audio status box: starts by itself after a short wait and plays once, as in the test.
   function player(item, wait, onend) {
     var st = h("span", null, "Beginning in " + wait + " seconds."), bar = h("i", { style: "width:0%" }), stopWait, iv, failed = h("div");
-    var vol = h("input", { type: "range", min: "0", max: "1", step: "0.1", value: String(volume), "aria-label": "Volume", oninput: function () { volume = parseFloat(vol.value); } });
+    var vol = h("input", { type: "range", min: "0", max: "1", step: "0.1", value: String(volume), "aria-label": "Volume", oninput: function () { volume = parseFloat(vol.value); if (aud) aud.volume = volume; } });
+    prefetch(item.audio);
     var el = h("div", null, h("div", { class: "xbox" }, h("div", { class: "xrow" }, h("b", null, "Status: "), st), h("div", { class: "xrow" }, h("span", null, "Volume"), vol), h("div", { class: "xbar" }, bar)), failed);
     function done(ok) {
       clearInterval(iv); bar.style.width = "100%"; st.textContent = "Completed.";
@@ -220,7 +273,7 @@
     }
     stopWait = countdown(wait, function (left) { st.textContent = "Beginning in " + Math.ceil(left) + " second" + (Math.ceil(left) === 1 ? "." : "s."); }, function () {
       st.textContent = "Playing.";
-      var est = audioChars(item.audio) * 68, t0 = Date.now();
+      var cl = clipFor(item.audio), est = cl ? cl.secs * 1000 : audioChars(item.audio) * 68, t0 = Date.now();
       iv = setInterval(function () { bar.style.width = Math.min(96, ((Date.now() - t0) / est) * 100) + "%"; }, 250);
       onLeave(function () { clearInterval(iv); });
       speak(item.audio, done);
@@ -701,7 +754,7 @@
       h("div", { class: "overall" }, h("b", null, "Practise by question type: " + done + " of " + total + " done"), h("div", { class: "bar" }, h("i", { style: "width:" + (done / total) * 100 + "%" })),
         done ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (!confirm("Clear all your saved progress? This also clears it from your account on every device.")) return; store = { p: {}, sets: {} }; persist(); viewHome(); } }, "Reset progress") : null),
       sections,
-      h("p", { class: "muted small" }, "Speaking items need a microphone. Listening items use your device's built-in voice, so the accent varies between phones and computers. Chrome, Edge and Safari work best.")));
+      h("p", { class: "muted small" }, "Speaking items need a microphone. Listening items play natural-voice recordings with a mix of American and British accents. Chrome, Edge and Safari work best.")));
     window.scrollTo(0, 0);
   }
 
