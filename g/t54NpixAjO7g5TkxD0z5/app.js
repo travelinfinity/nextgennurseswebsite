@@ -692,6 +692,12 @@
       h("div", { class: "promo" }, h("div", null, h("b", null, "Signed in as " + ((window.PTE_USER && window.PTE_USER.email) || "your account")), h("span", { class: "muted small" }, "Your scores and practice test progress save to your account, so you can carry on from any phone or computer.")),
         h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (window.PTE_SIGNOUT) window.PTE_SIGNOUT(); } }, "Sign out")),
       h("section", { class: "skill" }, h("h2", null, "Full practice tests", h("span", null, "Speaking and Writing, then Reading, then Listening, marked at the end.")), h("div", { class: "cards" }, sets)),
+      h("section", { class: "skill" }, h("h2", null, "PTE review guides (PDF)", h("span", null, "Included with the app. Save them to study offline or print.")), h("div", { class: "cards" },
+        [["Tips and Strategies for Nurses", "26 pages · timing, approach and common mistakes for all 22 question types, including Respond to a Situation and Summarize Group Discussion.", "NextGen-Nurses-PTE-Tips-and-Strategies.pdf"],
+         ["Answer Short Questions bank", "8 pages · common general-knowledge questions grouped by topic. Cover the answers and say yours aloud in about 3 seconds.", "NextGen-Nurses-PTE-Short-Answer-Review.pdf"]].map(function (g) {
+          return h("a", { class: "card", href: "/g/dS4yQmu2DyZ3meG5W924/" + g[2], download: g[2], target: "_blank", rel: "noopener" },
+            h("h3", null, g[0]), h("p", { class: "cm" }, g[1]), h("span", { class: "cp" }, "Download PDF ↓"));
+        }))),
       h("div", { class: "overall" }, h("b", null, "Practise by question type: " + done + " of " + total + " done"), h("div", { class: "bar" }, h("i", { style: "width:" + (done / total) * 100 + "%" })),
         done ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (!confirm("Clear all your saved progress? This also clears it from your account on every device.")) return; store = { p: {}, sets: {} }; persist(); viewHome(); } }, "Reset progress") : null),
       sections,
