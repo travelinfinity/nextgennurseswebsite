@@ -294,6 +294,29 @@ body.exam::before{display:none}
 .xitem summary{cursor:pointer;font-weight:700;padding:11px 0;display:flex;gap:10px;justify-content:space-between;align-items:center}
 .xitem[open]{padding-bottom:12px}
 .xtag{font-weight:400;font-size:13px;color:#55626f;white-space:nowrap}
+
+/* sign-in gate */
+.gate{padding-block:48px 64px;display:grid;justify-items:center}
+.gate-box{width:100%;max-width:460px;background:var(--surface);border:1.5px solid var(--line);border-radius:22px;padding:28px 24px;box-shadow:var(--shadow);display:grid;gap:14px}
+.gate-box h1{font-size:clamp(26px,5vw,32px)}
+.gate-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:4px}
+.gate-tabs button{min-height:40px;border:0;border-radius:999px;background:transparent;font-weight:700;cursor:pointer;color:var(--muted)}
+.gate-tabs button.on{background:var(--ink);color:var(--on-ink)}
+@media (prefers-color-scheme:dark){.gate-tabs button.on{background:var(--on-ink);color:var(--ink)}}
+.gate form{display:grid;gap:12px}
+.gate-field{display:grid;gap:6px}
+.gate-field label{font-weight:600;font-size:15px}
+.gate-field input{min-height:48px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);font-size:16px}
+.gate-field input:focus{border-color:var(--amber-text);outline:none}
+.gate-submit{width:100%}
+.gate-msg{font-size:14.5px;min-height:1em;color:var(--muted)}
+.gate-msg:empty{display:none}
+.gate-msg.ok{color:var(--ok)}.gate-msg.bad{color:var(--bad)}
+.gate-actions{display:flex;flex-wrap:wrap;gap:10px}
+.gate-links{display:flex;gap:12px;flex-wrap:wrap;font-size:14.5px}
+.gate-links:empty{display:none}
+.gate-foot{border-top:1.5px solid var(--line);padding-top:14px}
+.linkbtn{background:none;border:0;padding:0;color:var(--teal);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -303,12 +326,12 @@ body.exam::before{display:none}
   <a class="back" href="/">Main site</a>
 </div></nav>
 
-<main id="app"><div class="wrap" style="padding-block:60px"><p>Loading practice…</p></div></main>
+<main id="app"><div class="wrap" style="padding-block:60px"><p>Loading…</p></div></main>
 <noscript><div class="wrap" style="padding-block:40px"><p>This practice app needs JavaScript. Please enable it in your browser and reload the page.</p></div></noscript>
 
 <footer class="foot"><div class="wrap">
   <p>Independent practice material written by NextGen Nurses. These are original practice questions, not real exam items, and the marks shown are practice feedback, not official PTE scores. Not affiliated with or endorsed by Pearson, Ahpra or the Nursing and Midwifery Board of Australia. PTE Academic is a trademark of Pearson.</p>
-  <p>Your answers, recordings and progress stay on this device. Nothing is uploaded. · <a href="/">nextgennursestraining.com</a></p>
+  <p>Your recordings and written answers stay on this device and are never uploaded. Only your scores and practice test progress are saved to your account. · <a href="/">nextgennursestraining.com</a></p>
 </div></footer>
 
 <script src="/g/t54NpixAjO7g5TkxD0z5/data.js"></script>
@@ -325,6 +348,7 @@ body.exam::before{display:none}
 <script src="/g/t54NpixAjO7g5TkxD0z5/pool11.js"></script>
 <script src="/g/t54NpixAjO7g5TkxD0z5/pool12.js"></script>
 
-<script src="/g/t54NpixAjO7g5TkxD0z5/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="/g/t54NpixAjO7g5TkxD0z5/gate.js"></script>
 </body>
 </html>

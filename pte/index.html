@@ -259,13 +259,14 @@ details.q p{margin-top:10px;color:var(--muted)}
   <section class="buy" id="buy">
     <div><div class="big" id="price">A$44.00</div><span class="muted small">including tax · one-time payment · no subscription</span></div>
     <a class="btn btn-amber" id="buyBtn" href="#" target="_blank" rel="noopener">Buy the PTE practice app</a>
+    <a class="btn btn-line" href="/g/t54NpixAjO7g5TkxD0z5/">Already bought? Sign in</a>
   </section>
   <section style="display:grid;gap:10px">
     <h2 class="sec">Questions</h2>
-    <details class="q"><summary>How do I get access after I pay?</summary><p>Checkout is handled securely by Stripe. As soon as your payment goes through, your personal access page opens. Bookmark it or add it to your home screen, because that address is how you return to the app. If the page does not open, message WhatsApp support with your Stripe receipt and we will send your link.</p></details>
+    <details class="q"><summary>How do I get access after I pay?</summary><p>Checkout is handled securely by Stripe. After payment you are taken to the app, where you create an account with the same email you used at checkout (or sign in, if you already have one, including an account for our OSCE course). Your account unlocks automatically within a minute of payment. If it stays locked, message WhatsApp support with your Stripe receipt and we will unlock it.</p></details>
     <details class="q"><summary>Is this the official PTE test, and will I get a PTE score?</summary><p>No. This is an independent practice resource with original questions, and it is not affiliated with Pearson. Reading and most Listening items are marked automatically. Speaking and Writing are not scored by computer: you compare your recording or text with a sample answer and mark yourself against a checklist. At the end of each practice test the app converts your marks into estimated scores out of 90, which are a guide only.</p></details>
     <details class="q"><summary>What do I need?</summary><p>A phone or computer with Chrome, Edge or Safari, and a microphone for the Speaking items. Headphones with a microphone are best. Listening items use your device's built-in voice, so the accent varies between devices.</p></details>
-    <details class="q"><summary>Where is my progress saved?</summary><p>On the device you use. Your recordings, answers and marks stay in your browser and are not uploaded, so progress does not move between devices.</p></details>
+    <details class="q"><summary>Where is my progress saved?</summary><p>In your account. Your marks and where you are up to in each practice test are saved to your account, so you can sign in and carry on from any phone or computer. Your voice recordings and written answers stay on the device you use and are never uploaded.</p></details>
   </section>
 </div>
 </main>
@@ -274,7 +275,7 @@ details.q p{margin-top:10px;color:var(--muted)}
   <p><a href="/">nextgennursestraining.com</a> · <a href="/#pte">PTE review PDFs</a></p>
 </div></footer>
 <script>
-/* Stripe payment link for the PTE practice app. After payment it redirects to the buyers' app. */
+/* Stripe payment link for the PTE practice app. After payment it redirects to the app, where buyers sign in or create an account. */
 var PTE_APP_PAY_URL = "https://buy.stripe.com/eVq28k19McFV0mpaIk0000j";
 var PTE_APP_PRICE = "A$44.00";
 (function(){

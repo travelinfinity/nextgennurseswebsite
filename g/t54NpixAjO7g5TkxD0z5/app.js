@@ -1,4 +1,5 @@
-/* NextGen Nurses · PTE Academic practice app (members). Static, no backend: progress is kept in this browser. */
+/* NextGen Nurses · PTE Academic practice app (members). Progress is kept in this browser and synced to the
+   student's account by gate.js (window.PTE_SYNC). Only scores and test positions are synced, never recordings. */
 (function () {
   "use strict";
   var D = window.PTE_DATA, POOL = window.PTE_POOL || {}, app = document.getElementById("app");
@@ -113,10 +114,10 @@
     return seq;
   }
 
-  /* ---------- progress (this browser only) ---------- */
+  /* ---------- progress (this browser, synced to the account by gate.js) ---------- */
   var KEY = "ngn-pte-progress-v2", store = { p: {}, sets: {} };
   try { var raw = JSON.parse(localStorage.getItem(KEY) || "null"); if (raw && raw.p) store = raw; store.sets = store.sets || {}; } catch (e) {}
-  function persist() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} try { if (window.PTE_SYNC) window.PTE_SYNC(store); } catch (e) {} }
   function save(taskId, idx, score) {
     store.p[taskId] = store.p[taskId] || {};
     store.p[taskId][idx] = Math.round(Math.max(0, Math.min(1, score)) * 100) / 100;
@@ -688,11 +689,11 @@
       h("p", { class: "note" }, "NMBA minimum scores for tests taken on or after 23 April 2026. Always confirm on ",
         h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra's accepted English tests page"), " before you book."))));
     app.appendChild(h("div", { class: "wrap main" },
-      h("div", { class: "promo" }, h("div", null, h("b", null, "Keep this page"), h("span", { class: "muted small" }, "This address is your access to the app. Bookmark it or add it to your home screen, and please do not share it.")),
-        h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { try { navigator.clipboard.writeText(location.href.split("#")[0]); this.textContent = "Link copied"; } catch (e) {} } }, "Copy my link")),
+      h("div", { class: "promo" }, h("div", null, h("b", null, "Signed in as " + ((window.PTE_USER && window.PTE_USER.email) || "your account")), h("span", { class: "muted small" }, "Your scores and practice test progress save to your account, so you can carry on from any phone or computer.")),
+        h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (window.PTE_SIGNOUT) window.PTE_SIGNOUT(); } }, "Sign out")),
       h("section", { class: "skill" }, h("h2", null, "Full practice tests", h("span", null, "Speaking and Writing, then Reading, then Listening, marked at the end.")), h("div", { class: "cards" }, sets)),
       h("div", { class: "overall" }, h("b", null, "Practise by question type: " + done + " of " + total + " done"), h("div", { class: "bar" }, h("i", { style: "width:" + (done / total) * 100 + "%" })),
-        done ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (!confirm("Clear all saved progress on this device?")) return; store = { p: {}, sets: {} }; persist(); viewHome(); } }, "Reset progress") : null),
+        done ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { if (!confirm("Clear all your saved progress? This also clears it from your account on every device.")) return; store = { p: {}, sets: {} }; persist(); viewHome(); } }, "Reset progress") : null),
       sections,
       h("p", { class: "muted small" }, "Speaking items need a microphone. Listening items use your device's built-in voice, so the accent varies between phones and computers. Chrome, Edge and Safari work best.")));
     window.scrollTo(0, 0);
