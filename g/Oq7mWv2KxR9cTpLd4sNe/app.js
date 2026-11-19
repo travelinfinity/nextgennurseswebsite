@@ -523,53 +523,114 @@
     f.next.textContent = "Check answers"; f.next.onclick = fin;
   }
 
-  /* ---------- normal pages ---------- */
-  function page(nodes) { leave(); document.body.classList.remove("exam"); app.textContent = ""; add(app, nodes); window.scrollTo(0, 0); }
-  function bar(f) { return h("div", { class: "bar" }, h("i", { style: "width:" + Math.round(f * 100) + "%" })); }
+  /* ---------- dashboard pages (sidebar layout, like the PTE app) ---------- */
+  var ABBR = { LA: "L-A", LB: "L-B", LC: "L-C", RA: "R-A", RB: "R-B", RC: "R-C", W: "WR", S: "SP" };
+  var TIPS = {
+    LA: ["Use the 30 seconds of reading time to predict what kind of word goes in each gap (a number, a body part, a symptom).", "Write exactly what you hear. You don't need full sentences, but spelling counts.", "The notes follow the order of the conversation. If you miss one, move on."],
+    LB: ["Read the question and the three options before the extract starts.", "Listen for the speaker's purpose or main point, not just a single word.", "Wrong options often repeat words from the recording. Check the meaning."],
+    LC: ["Use the 90 seconds to read all six questions and underline the key idea in each.", "The questions follow the order of the talk.", "Listen for opinions and attitudes as well as facts."],
+    RA: ["Scan, don't read every word: you have 15 minutes for 20 questions.", "For questions 1–7, look at the headings and the type of information in each text.", "Copy words exactly from the texts, with correct spelling."],
+    RB: ["Identify what kind of text it is (policy, email, notice) and its purpose.", "Read the question first, then find the part of the text that answers it.", "Watch for words like 'must', 'only' and 'unless'."],
+    RC: ["Read the first and last paragraphs to understand the writer's overall view.", "Questions follow the order of the text.", "For vocabulary and reference questions, read the sentences around the word."],
+    W: ["Use the 5 minutes of reading time to decide who the reader is and what they need to know.", "Leave out information the reader does not need. Aim for about 180–200 words in the body.", "State the purpose in the first paragraph and the request at the end."],
+    S: ["Use the 3 minutes to plan how you will cover each point on the card.", "Start by finding out what the patient knows and what worries them.", "Check understanding and show empathy. The criteria reward how you communicate, not only what you say."]
+  };
+  function bar(f, cls) { return h("div", { class: "bar" + (cls ? " " + cls : "") }, h("i", { style: "width:" + Math.round(Math.max(0, Math.min(1, f)) * 100) + "%" })); }
+  function closeSide() { document.body.classList.remove("side-open"); }
+  function subBest(k, n) { return (store.p["sub" + k] || {})[n]; }
+  function testState(t) { var d = ["L", "R", "W", "S"].filter(function (k) { return subBest(k, t.n) != null; }).length; return { done: d, state: d === 4 ? "done" : d ? "progress" : "new" }; }
+  function sidebar(active) {
+    var tests = TESTS.map(function (t) {
+      var st = testState(t);
+      return h("a", { href: "#/test/" + t.n, class: "sl" + (active === "test" + t.n ? " on" : ""), onclick: closeSide },
+        h("i", { class: "sdot st-" + st.state, "aria-hidden": "true" }), h("span", { class: "sn" }, "Practice Test " + t.n), h("span", { class: "sx" }, st.done ? st.done + "/4" : ""));
+    });
+    var groups = ["L", "R", "W", "S"].map(function (k) {
+      return h("div", { class: "sg" }, h("p", { class: "sh" }, SUB[k].name), PARTS.filter(function (p) { return p.sub === k; }).map(function (p) {
+        var st = partStat(p.id);
+        return h("a", { href: "#/part/" + p.id, class: "sl" + (active === "part" + p.id ? " on" : ""), onclick: closeSide, title: p.name },
+          h("b", { class: "ab ab-" + k }, ABBR[p.id]), h("span", { class: "sn" }, p.name.replace(/^(Listening|Reading) /, "")), h("span", { class: "sx" }, st.done + "/" + st.total));
+      }));
+    });
+    return h("aside", { class: "side", "aria-label": "Practice tests and parts" },
+      h("a", { href: "#/", class: "sl home" + (active === "home" ? " on" : ""), onclick: closeSide }, h("b", { class: "ab ab-home" }, "⌂"), h("span", { class: "sn" }, "Overview")),
+      h("p", { class: "sh" }, "Practice tests"), h("div", { class: "sg tests" }, tests),
+      h("p", { class: "sh big" }, "Practise by part"), groups);
+  }
+  function dash(active, title, body) {
+    leave(); document.body.classList.remove("exam"); closeSide();
+    document.title = title + " · OET practice";
+    app.textContent = "";
+    app.appendChild(h("div", { class: "dash" },
+      h("button", { class: "side-toggle btn btn-line btn-sm", type: "button", "aria-label": "Show practice tests and parts", onclick: function () { document.body.classList.toggle("side-open"); } }, "☰  Tests & parts"),
+      h("div", { class: "side-scrim", onclick: closeSide }),
+      sidebar(active), h("div", { class: "dmain" }, h("div", { class: "dwrap" }, body))));
+    var on = app.querySelector(".side .sl.on"); if (on && on.scrollIntoView && active !== "home") try { on.scrollIntoView({ block: "nearest" }); } catch (e) {}
+    window.scrollTo(0, 0);
+  }
+  function tile(label, value, sub) { return h("div", { class: "tile" }, h("span", { class: "tl" }, label), h("b", null, value), sub ? h("span", { class: "ts" }, sub) : null); }
   function dashboard() {
     var allDone = 0, all = 0; PARTS.forEach(function (p) { var s = partStat(p.id); allDone += s.done; all += s.total; });
-    page([
-      h("section", { class: "hero" }, h("div", { class: "wrap" },
-        h("div", { class: "eyebrow" }, "OET Nursing · member practice"),
-        h("h1", null, TESTS.length + " full practice tests, ", h("em", null, "in test conditions.")),
-        h("p", null, TOTALQ.toLocaleString() + " questions across Listening, Reading, Writing and Speaking. Listening uses recorded dialogues between nurses, doctors, physiotherapists and patients."),
-        h("div", { class: "targets", style: "grid-template-columns:repeat(4,minmax(0,1fr));max-width:520px" }, ["L", "R", "W", "S"].map(function (k) { return h("div", null, h("b", null, String(TARGET[k])), h("span", null, SUB[k].name)); })),
-        h("p", { class: "note" }, "NMBA minimum OET scores for tests on or after 23 April 2026. Check ", h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra"), " before you book."))),
-      h("div", { class: "wrap main" },
-        h("div", { class: "overall" }, h("b", null, "Your progress"), bar(all ? allDone / all : 0), h("span", { class: "muted small" }, allDone + " of " + all + " tasks done"), window.OET_SIGNOUT ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { window.OET_SIGNOUT(); } }, "Sign out") : null),
-        h("section", { class: "skill" }, h("h2", null, "Full practice tests", h("span", null, "Each test has all four sub-tests, timed like the real exam.")),
-          h("div", { class: "cards" }, TESTS.map(function (t) {
-            var done = ["L", "R", "W", "S"].filter(function (k) { return (store.p["sub" + k] || {})[t.n] != null; }).length;
-            return h("a", { class: "card", href: "#/test/" + t.n }, h("h3", null, "Practice Test " + t.n), h("div", { class: "cm" }, t.RA ? "Reading: " + t.RA.topic : ""), h("div", { class: "cp" }, bar(done / 4), done + "/4"));
-          }))),
-        h("section", { class: "skill" }, h("h2", null, "Practise one part at a time", h("span", null, "Pick any task. Marked instantly, with transcripts and sample answers.")),
-          h("div", { class: "cards" }, PARTS.map(function (p) {
-            var s = partStat(p.id);
-            return h("a", { class: "card", href: "#/part/" + p.id }, h("h3", null, p.name), h("div", { class: "cm" }, p.desc), h("div", { class: "cp" }, bar(s.total ? s.done / s.total : 0), s.done + "/" + s.total + (s.done ? " · avg " + Math.round(s.avg * 100) + "%" : "")));
-          }))),
-        h("div", { class: "promo" }, h("div", null, h("b", null, "OET Nursing Review and Test-Taking Strategies (PDF)"), h("span", { class: "muted small" }, "Format, scores and strategies for all four sub-tests, a referral letter template and role-play phrases. Included with the app.")), h("a", { class: "btn btn-line", href: "/g/2vgwXzXoHqM85EZaxcgo/NextGen-Nurses-OET-Nursing-Review-and-Strategies.pdf", target: "_blank", rel: "noopener", download: true }, "Download the PDF")),
-        h("div", { class: "promo" }, h("div", null, h("b", null, "Need help with your OET?"), h("span", { class: "muted small" }, "Message us on WhatsApp for support with the app or your study plan.")), h("a", { class: "btn btn-line", href: "https://wa.me/61458567621", target: "_blank", rel: "noopener" }, "WhatsApp support")))
+    var completed = TESTS.filter(function (t) { return testState(t).state === "done"; }).length;
+    var next = TESTS.filter(function (t) { return testState(t).state === "progress"; })[0] || TESTS.filter(function (t) { return testState(t).state === "new"; })[0];
+    var bestOf = function (k) { var v = TESTS.map(function (t) { return subBest(k, t.n); }).filter(function (x) { return x != null; }); return v.length ? Math.max.apply(null, v) : null; };
+    var recent = TESTS.filter(function (t) { return testState(t).done; });
+    dash("home", "Overview", [
+      h("div", { class: "dhead" }, h("div", null, h("div", { class: "eyebrow" }, "OET Nursing · member practice"), h("h1", null, "Overview"),
+        h("p", { class: "muted" }, TESTS.length + " full practice tests and " + TOTALQ.toLocaleString("en-AU") + " questions. Listening uses recorded consultations between nurses, doctors, physiotherapists and patients.")),
+        window.OET_SIGNOUT ? h("button", { class: "btn btn-line btn-sm", type: "button", onclick: function () { window.OET_SIGNOUT(); } }, "Sign out") : null),
+      h("div", { class: "tiles" }, tile("Tasks done", allDone + " / " + all, Math.round(all ? allDone / all * 100 : 0) + "% of the bank"), tile("Tests completed", completed + " / " + TESTS.length, "all four sub-tests"),
+        tile("Best Listening", bestOf("L") != null ? String(bestOf("L")) : "–", "target " + TARGET.L), tile("Best Reading", bestOf("R") != null ? String(bestOf("R")) : "–", "target " + TARGET.R)),
+      next ? h("a", { class: "cont", href: "#/test/" + next.n }, h("div", null, h("span", { class: "tl" }, testState(next).done ? "Continue" : "Start next"), h("b", null, "Practice Test " + next.n), h("span", { class: "ts" }, testState(next).done + " of 4 sub-tests done · Reading topic: " + next.RA.topic), bar(testState(next).done / 4)), h("span", { class: "btn btn-amber" }, testState(next).done ? "Continue" : "Start")) : null,
+      h("div", { class: "dgrid" },
+        h("div", { class: "panel" }, h("h2", null, "Best scores vs NMBA minimums"), ["L", "R", "W", "S"].map(function (k) {
+          var b = bestOf(k);
+          return h("div", { class: "srow" }, h("div", { class: "srh" }, h("b", null, SUB[k].name), h("span", null, b != null ? "about " + b + " (" + grade(b) + ")" : "not yet attempted"), h("span", { class: "tgt" }, "target " + TARGET[k])), bar((b || 0) / 500, "sk-" + k));
+        }), h("p", { class: "muted small" }, "Estimates on the OET 0–500 scale. Writing and Speaking come from your self-assessment.")),
+        h("div", { class: "panel" }, h("h2", null, "Progress by part"), PARTS.map(function (p) {
+          var st = partStat(p.id);
+          return h("a", { class: "srow", href: "#/part/" + p.id, style: "text-decoration:none;color:inherit" }, h("div", { class: "srh" }, h("b", null, p.name), h("span", null, st.done + " / " + st.total + (st.done ? " · avg " + Math.round(st.avg * 100) + "%" : ""))), bar(st.total ? st.done / st.total : 0, "sk-" + p.sub));
+        }))),
+      recent.length ? h("div", { class: "panel" }, h("h2", null, "Your practice tests"), h("table", { class: "rtable" }, h("thead", null, h("tr", null, h("th", null, "Test"), ["L", "R", "W", "S"].map(function (k) { return h("th", null, SUB[k].name); }))),
+        h("tbody", null, recent.map(function (t) { return h("tr", { onclick: function () { location.hash = "#/test/" + t.n; } }, h("td", null, "Test " + t.n), ["L", "R", "W", "S"].map(function (k) { var v = subBest(k, t.n); return h("td", { class: v == null ? "" : v >= TARGET[k] ? "ok" : "lo" }, v == null ? "–" : String(v)); })); })))) : null,
+      h("div", { class: "dgrid" },
+        h("a", { class: "panel", href: "/g/2vgwXzXoHqM85EZaxcgo/NextGen-Nurses-OET-Nursing-Review-and-Strategies.pdf", target: "_blank", rel: "noopener", download: true, style: "text-decoration:none;color:inherit" }, h("h2", null, "OET review guide (PDF)"), h("p", { class: "muted small" }, "Format, scores and strategies for all four sub-tests, a referral letter template, role-play phrases and a study plan. Included with the app."), h("span", { class: "cp", style: "font-weight:700" }, "Download PDF ↓")),
+        h("div", { class: "panel" }, h("h2", null, "Need help?"), h("p", { class: "muted small" }, "Message us on WhatsApp for help with the app or your study plan. Use headphones for Listening and a microphone for Speaking; Chrome, Edge and Safari work best."), h("a", { class: "btn btn-line btn-sm", href: "https://wa.me/61458567621", target: "_blank", rel: "noopener", style: "justify-self:start" }, "WhatsApp support"))),
+      h("p", { class: "note muted small" }, "NMBA minimum OET scores for tests on or after 23 April 2026: Listening 350, Reading 360, Writing 350, Speaking 360. Always confirm on ", h("a", { href: "https://www.ahpra.gov.au/Registration/Registration-Standards/English-language-skills/Accepted-English-language-tests.aspx", target: "_blank", rel: "noopener" }, "Ahpra's accepted English tests page"), ".")
     ]);
   }
   function testPage(n) {
     var t = TESTS.filter(function (x) { return x.n === n; })[0]; if (!t) { location.hash = "#/"; return; }
-    page(h("div", { class: "wrap" }, h("div", { class: "thead" }, h("a", { class: "crumb", href: "#/" }, "← All tests"), h("h1", null, "Practice Test " + n),
-      h("p", { class: "muted" }, "Take the sub-tests in any order. Use headphones for Listening and a quiet room with a microphone for Speaking.")),
-      h("div", { class: "cards", style: "margin:20px 0 60px" }, ["L", "R", "W", "S"].map(function (k) {
-        var best = (store.p["sub" + k] || {})[n];
-        return h("div", { class: "card" }, h("h3", null, SUB[k].name), h("div", { class: "cm" }, SUB[k].blurb), h("div", { class: "cm" }, "Time: " + SUB[k].time),
-          best != null ? h("div", { class: "cp" }, "Best: about " + best + " (" + grade(best) + ")") : null,
-          h("button", { class: "btn btn-amber btn-sm", type: "button", onclick: function () { location.hash = "#/run/" + n + "/" + k; } }, best != null ? "Try again" : "Start"));
-      }))));
+    var parts = {
+      L: [["Part A", "2 consultations · 24 questions", t.LA.map(function (x) { return x.title.split("·")[0].replace("Patient:", "").replace("Child:", "").trim(); }).join(", ")], ["Part B", "6 workplace extracts · 6 questions", ""], ["Part C", "2 extracts · 12 questions", t.LC.map(function (x) { return x.who.split(",")[0].replace(/^an? (interview|presentation) (with|by) /, ""); }).join(", ")]],
+      R: [["Part A", "15 minutes · 20 questions", t.RA.topic], ["Parts B and C", "45 minutes · 22 questions", t.RC.map(function (x) { return x.t; }).join(" · ")]],
+      W: [["Letter", "5 minutes reading + 40 minutes writing", [].concat(t.W)[0].title]],
+      S: [["Role-plays", "2 × (3 minutes preparation + 5 minutes)", t.S.map(function (x) { return x.set; }).join(", ")]]
+    };
+    dash("test" + n, "Practice Test " + n, [
+      h("div", { class: "dhead" }, h("div", null, h("div", { class: "eyebrow" }, "Full practice test"), h("h1", null, "Practice Test " + n), h("p", { class: "muted" }, "Take the four sub-tests in any order. Use headphones for Listening and a quiet room with a microphone for Speaking."))),
+      ["L", "R", "W", "S"].map(function (k) {
+        var best = subBest(k, n);
+        return h("div", { class: "panel" }, h("div", { class: "ph" }, h("h2", null, h("b", { class: "ab ab-" + k }, k === "L" ? "LIS" : k === "R" ? "REA" : k === "W" ? "WRI" : "SPK"), SUB[k].name), h("span", null, "Time: " + SUB[k].time)),
+          h("ul", { class: "plist" }, parts[k].map(function (p) { return h("li", null, h("b", null, p[0]), h("span", null, p[1] + (p[2] ? " · " + p[2] : ""))); })),
+          h("div", { class: "row" }, h("button", { class: "btn btn-amber btn-sm", type: "button", onclick: function () { location.hash = "#/run/" + n + "/" + k; } }, best != null ? "Retake" : "Start " + SUB[k].name),
+            best != null ? h("span", { class: "muted small" }, "Best: about " + best + " (" + grade(best) + ") · target " + TARGET[k]) : null));
+      })
+    ]);
   }
   function partPage(pid) {
     var p = PARTS.filter(function (x) { return x.id === pid; })[0]; if (!p) { location.hash = "#/"; return; }
-    var done = store.p[pid] || {};
-    page(h("div", { class: "wrap" }, h("div", { class: "thead" }, h("a", { class: "crumb", href: "#/" }, "← Home"), h("h1", null, p.name), h("p", { class: "muted" }, p.desc)),
-      h("div", { class: "cards", style: "margin:20px 0 60px" }, ITEMS[pid].map(function (it, i) {
-        var sc = done[it.id];
-        return h("a", { class: "card", href: "#/do/" + pid + "/" + it.id }, h("div", { class: "qno", style: "font:700 11.5px/1.2 var(--f-mono);color:var(--amber-text)" }, "Test " + it.t.n + " · #" + (i + 1)), h("h3", { style: "font-size:16px" }, it.label), h("div", { class: "cp" }, sc != null ? "Best " + Math.round(sc * 100) + "%" : "Not tried"));
-      }))));
+    var done = store.p[pid] || {}, st = partStat(pid);
+    dash("part" + pid, p.name, [
+      h("div", { class: "dhead" }, h("div", null, h("div", { class: "eyebrow" }, SUB[p.sub].name), h("h1", null, p.name), h("p", { class: "muted" }, p.desc))),
+      h("div", { class: "tiles three" }, tile("Done", st.done + " / " + st.total), tile("Average", st.done ? Math.round(st.avg * 100) + "%" : "–"), tile("Questions", String(ITEMS[pid].reduce(function (a, it) { return a + qCount(pid, it.x); }, 0)))),
+      h("div", { class: "panel" }, h("h2", null, "Tips"), h("ul", { class: "tips" }, TIPS[pid].map(function (t) { return h("li", null, t); }))),
+      h("div", { class: "panel" }, h("h2", null, "Choose a task", h("span", { class: "legend" }, h("i", { class: "q hi" }), "80%+", h("i", { class: "q mid" }), "50–79%", h("i", { class: "q lo" }), "below 50%")),
+        h("div", { style: "display:grid;gap:6px" }, ITEMS[pid].map(function (it, i) {
+          var sc = done[it.id], cls = sc == null ? "" : sc >= 0.8 ? " hi" : sc >= 0.5 ? " mid" : " lo";
+          return h("a", { class: "sl", href: "#/do/" + pid + "/" + it.id, style: "border:1.5px solid var(--line)" }, h("b", { class: "ab ab-" + p.sub + cls }, String(i + 1)), h("span", { class: "sn" }, it.label), h("span", { class: "sx" }, "Test " + it.t.n + (sc != null ? " · " + Math.round(sc * 100) + "%" : "")));
+        })))
+    ]);
   }
   function route() {
     var r = location.hash.replace(/^#\/?/, "").split("/");
